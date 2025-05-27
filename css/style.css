@@ -1,0 +1,70 @@
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #111;
+            color: white;
+  font-family: "Roboto", sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .controls {
+            padding: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type=range] {
+            width: 100%;
+        }
+
+        button {
+            margin: 10px 5px 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .green {
+            background: #10b981;
+        }
+
+        .yellow {
+            background: #facc15;
+        }
+
+        .red {
+            background: #ef4444;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #result {
+            margin-top: 12px;
+            font-size: 16px;
+            color: #7dd3fc;
+            line-height: 1.4em;
+        }
+
+        canvas {
+            display: block;
+            margin: 20px auto;
+            background: black;
+            touch-action: none;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
