@@ -6,35 +6,39 @@
     <title>Patryk Łyko - Symulacja rzutu ukośnego</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js" defer></script>
 </head>
 <body>
     <h2>Patryk Łyko - Symulacja rzutu ukośnego</h2>
+    <!-- Kontroli danych wejściowych -->
     <div class="controls">
         <label>Kąt rzutu: <span id="angleVal">45</span>°</label>
         <input type="range" id="angle" min="0" max="90" value="45" />
         <label>Prędkość początkowa: <span id="speedVal">30</span> m/s</label>
         <input type="range" id="speed" min="0" max="50" value="25" />
         <div>
-            <button id="startBtn" class="green">Start</button>
-            <button id="pauseBtn" class="yellow" disabled>Pauza</button>
-            <button id="stopBtn" class="red" disabled>Stop</button>
+            <button id="startBtn" class="green-button">Start</button>
+            <button id="pauseBtn" class="yellow-button" disabled>Pauza</button>
+            <button id="stopBtn" class="red-button" disabled>Stop</button>
         </div>
+        <!-- Obszar wyświetlania wyników -->
         <div id="result">
-            <div>Czas: <span id="czasVal">0.00</span> s</div>
-            <div>Pozycja x: <span id="xVal">0.00</span> m</div>
-            <div>Pozycja y: <span id="yVal">0.00</span> m</div>
-            <div>Prędkość pozioma vx: <span id="vxVal">0.00</span> m/s</div>
-            <div>Prędkość pionowa vy: <span id="vyVal">0.00</span> m/s</div>
-            <div>Prędkość początkowa: <span id="v0Val">0.00</span> m/s</div>
-            <div>Prędkość chwilowa: <span id="vVal">0.00</span> m/s</div>
-            <div>Maksymalna wysokość: <span id="hMaxVal">0.00</span> m</div>
+            <div>Czas: <span id="czasVal">0.00</span> <span class="units">s</span></div>
+            <div>Pozycja x: <span id="xVal">0.00</span> <span class="units">m</span></div>
+            <div>Pozycja y: <span id="yVal">0.00</span> <span class="units">m</span></div>
+            <div>Prędkość pozioma vx: <span id="vxVal">0.00</span> <span class="units">m/s</span></div>
+            <div>Prędkość pionowa vy: <span id="vyVal">0.00</span> <span class="units">m/s</span></div>
+            <div>Prędkość początkowa: <span id="v0Val">0.00</span> <span class="units">m/s</span></div>
+            <div>Prędkość chwilowa: <span id="vVal">0.00</span> <span class="units">m/s</span></div>
+            <div>Maksymalna wysokość: <span id="hMaxVal">0.00</span> <span class="units">m</span></div>
         </div>
     </div>
+<!-- Obszar rysowania symulacji CANVAS -->
     <canvas id="canvas"></canvas>
-<div id="edu-section" style="max-width: 900px; margin: 40px auto; padding: 25px; background: #1c1c1c; border-radius: 12px; text-align: left; color: #e4e4e4; font-size: 15px; line-height: 1.6em;">
+<!-- Obszar edukacyjny - wyjaśnienie zjawiska rzutu ukośnego -->
+<div id="edu-section">
   <h2 style="color:#93c5fd;">🚀 Jak działa symulacja rzutu ukośnego?</h2>
 
   <h3 style="color:#fcd34d;">⚛️ Założenia fizyczne:</h3>
@@ -63,8 +67,29 @@
   <ul>
     <li><code>vₓ = v₀ · cos(α)</code> — pozioma składowa prędkości (stała)</li>
     <li><code>vᵧ₀ = v₀ · sin(α)</code> — pionowa składowa prędkości (zmienna)</li>
+    <li><code>v(t) = √(vₓ² + vᵧ²)</code> — prędkość chwilową w danym czasie </li>
 
   </ul>
+<div class="svg-info-wrapper">
+  <img src="img/skladowe.svg" alt="Szkic wektorowy" class="vector-illustration" />
+  
+  <div class="explanation-container">
+    
+<h3>FUNKCJE TRYGONOMETRYCZNE:</h3>
+
+<code>cos(α) = vₓ / v₀</code><br>
+<code>sin(α) = vᵧ₀ / v₀</code><br>
+<br>
+<code class="blue-exp">vₓ = v₀ · cos(α)</code><br>
+<code class="red-exp">vᵧ₀ = v₀ · sin(α)</code><br>
+<br><br>
+<h3>TWIERDZENIE PITAGORASA:</h3>
+
+<code>vₓ² + vᵧ² = v²</code><br>
+<code class="lime-exp">v = √(vₓ² + vᵧ²)</code>
+  </div>
+</div>  
+
 
   <h3 style="color:#fcd34d;">📐 Wzory wykorzystywane w symulacji:</h3>
   <ul>

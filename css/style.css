@@ -1,13 +1,43 @@
-        html, body {
+:root {
+/* Design System */
+  --accent-lime-500: #A3D348;
+  --accent-blue-400: #6CCDFF;
+  --accent-blue-300: #89DEFF;
+  --accent-blue-200: #B0EEFF;
+  --accent-red-500: #FF6551;
+
+  
+  --background-darkmode: #111;
+  --on-background-darkmode: #ccc;
+
+
+  --btn-green-active: #10b981;
+  --btn-yellow-active: #facc15;
+  --btn--red-active:#ef4444;
+  --on-button: white;
+
+  --canvas-bg:black;
+
+  --edu-section-bg: #1c1c1c;
+}
+
+html, body {
             margin: 0;
             padding: 0;
-            background: #111;
-            color: white;
-  font-family: "Roboto", sans-serif;
+            background: var(--background-darkmode);
+            color: var(--on-background-darkmode);
+            font-family: "IBM-Plex Sans", sans-serif;
             text-align: center;
             overflow-x: hidden;
         }
 
+        h3 {
+            text-transform: uppercase;
+            font-size: 0.9em;
+            margin-bottom: 0.5em;
+            color: var(--on-background-darkmode);
+        }
+/* SEKCJA KONTROLEK */
         .controls {
             padding: 10px;
             max-width: 400px;
@@ -27,24 +57,24 @@
             margin: 10px 5px 0;
             padding: 10px 20px;
             font-size: 16px;
-            background: #10b981;
-            color: white;
+            background: var(--btn-green-active);
+            color: var(--on-button);
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .green {
-            background: #10b981;
+        .green-button {
+            background: var(--btn-green-active);
         }
 
-        .yellow {
-            background: #facc15;
+        .yellow-button {
+            background: var(--btn-yellow-active);
         }
 
-        .red {
-            background: #ef4444;
+        .red-button {
+            background: var(--btn--red-active);
         }
 
         button:disabled {
@@ -55,16 +85,87 @@
         #result {
             margin-top: 12px;
             font-size: 16px;
-            color: #7dd3fc;
+            color: var(--accent-blue-400);
             line-height: 1.4em;
         }
-
+        
+        #result span {
+            color: var(--accent-blue-200);
+        }
+        #result span.units{
+            color: var(--accent-blue-400)
+        }
+/* SEEKCJA ANIMACJI SYMULACJI */
         canvas {
             display: block;
             margin: 20px auto;
-            background: black;
+            background: var(--canvas-bg);
             touch-action: none;
             max-width: 100%;
             height: auto;
             border-radius: 12px;
         }
+
+/* SEKCJA EDUKACYJNA */
+#edu-section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 25px;
+  background: var(--edu-section-bg);
+  border-radius: 12px;
+  text-align: left;
+  color: var(--on-background-darkmode);
+  font-size: 15px;
+  line-height: 1.6em;
+}
+
+/* Kontener z grafiką i opisem */
+.svg-info-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* Obrazek SVG */
+.vector-illustration {
+  flex: 1 1 400px;
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+/* Opis obok SVG */
+.explanation-container {
+  flex: 1 1 300px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--on-background-darkmode);
+}
+
+/* RESPONSYWNOŚĆ */
+@media (max-width: 768px) {
+  .svg-info-wrapper {
+    flex-direction: column;
+  }
+
+  .vector-illustration,
+  .explanation-container {
+    max-width: 100%;
+  }
+}
+
+.lime-exp{
+    color: var(--accent-lime-500);
+}
+.blue-exp{
+    color: var(--accent-blue-400);
+}
+.red-exp{
+    color: var(--accent-red-500);
+}

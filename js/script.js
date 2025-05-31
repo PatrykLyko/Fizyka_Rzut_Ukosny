@@ -1,4 +1,4 @@
- // ### UCHWYTY DO HTML ###
+        // ### UCHWYTY DO HTML ###
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
         const angleSlider = document.getElementById("angle");
@@ -23,7 +23,7 @@
         const g = 9.81;
 
         // Parametry wizualne
-        const padding = 60;
+        const padding = 70;
         let scale = 4;
 
         // Parametry wejscia
@@ -41,15 +41,19 @@
         // Dynamiczne ustalanie skali w zależności od szerokości okna
         function determineScale() {
             const width = window.innerWidth;
-            scale = width < 500 ? 1.5 : width < 800 ? 2 : width < 1100 ? 3 : 4;
-        }
+            scale = width < 800 ? 2 : width < 1100 ? 3 : 4;
+        } 
+
 
         // Ustawienie wymiarów canvas na podstawie skali i paddingu
         function setupCanvas() {
             determineScale();
             canvas.width = 270 * scale + padding * 2;
             canvas.height = 140 * scale + padding * 2;
-        }
+
+}
+        
+            
         // Obliczanie i wyświetlanie danych początkowych w panelu wyników
         function updateInitialValues() {
             const rad = angle * Math.PI / 180; // zamiana stopni na radiany
@@ -245,8 +249,10 @@
         // Nasluchiwanie zmiany rozmiaru okna – przerysowanie siatki
         window.addEventListener("resize", () => {
             setupCanvas();
-            drawGrid();
+          //  drawGrid();
+          reset();
         });
+
         // Inicjalizacja: konfiguracja canvas i wyświetlenie danych startowych
         setupCanvas();
         reset();
