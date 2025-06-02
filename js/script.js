@@ -1,4 +1,27 @@
-        // ### UCHWYTY DO HTML ###
+   // ### STAŁE FIZYCZNE I KONFIGURACYJNE ### 
+        // ### PHYSICS AND CONFIGURATION CONSTANTS ###
+        const PHYSICS = {
+            GRAVITY: 9.81,              // Przyspieszenie ziemskie w m/s² - Earth's gravitational acceleration
+            DEG_TO_RAD: Math.PI / 180   // Konwersja stopni na radiany - Degrees to radians conversion
+        };
+
+        const CANVAS = {
+            BASE_WIDTH: 270,            // Podstawowa szerokość canvas - Base canvas width
+            BASE_HEIGHT: 140,           // Podstawowa wysokość canvas - Base canvas height  
+            PADDING_SIDE: 45,
+            PADDING_UPDOWN: 45,                // Margines wokół obszaru rysowania - Padding around drawing area
+            TRAJECTORY_STEPS: 300       // Liczba kroków do rysowania trajektorii - Number of steps for trajectory drawing
+        };
+
+        const VISUAL = {
+            GRID_SPACING_MULTIPLIER: 10,    // Mnożnik odstępów siatki - Grid spacing multiplier
+            BALL_RADIUS: 5,                 // Promień kulki - Ball radius in pixels
+            TRAJECTORY_WIDTH: 2,            // Grubość linii trajektorii - Trajectory line width
+            GRID_WIDTH: 1                   // Grubość linii siatki - Grid line width
+        };
+
+        // ### ELEMENTY DOM ### 
+        // ### DOM ELEMENTS ###
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
         const angleSlider = document.getElementById("angle");
@@ -13,246 +36,356 @@
         const yVal = document.getElementById("yVal");
         const vxVal = document.getElementById("vxVal");
         const vyVal = document.getElementById("vyVal");
-        const v0Val = document.getElementById("v0Val");
+        const rangeMaxVal = document.getElementById("rVal");
         const vVal = document.getElementById("vVal");
         const hMaxVal = document.getElementById("hMaxVal");
 
-        // ### ZMIENNE ###
+        // ### ZMIENNE STANU ### 
+        // ### STATE VARIABLES ###
+        let scale = 4;                  // Skala rysowania - Drawing scale
+        let angle = 45;                 // Kąt rzutu w stopniach - Launch angle in degrees
+        let speed = 25;                 // Prędkość początkowa w m/s - Initial speed in m/s
+        let time = 0;                   // Aktualny czas symulacji - Current simulation time
+        let running = false;            // Czy symulacja jest uruchomiona - Is simulation running
+        let paused = false;             // Czy symulacja jest wstrzymana - Is simulation paused
+        let lastFrameTime = null;       // Czas ostatniej klatki animacji - Last animation frame time
 
-        // Stałe Fizyczne
-        const g = 9.81;
+        // Cache'owane obliczenia fizyczne - Cached physics calculations
+        let cachedPhysics = null;
 
-        // Parametry wizualne
-        const padding = 70;
-        let scale = 4;
+        // ### FUNKCJE OBLICZEŃ FIZYCZNYCH ###
+        // ### PHYSICS CALCULATION FUNCTIONS ###
+        
+        /**
+         * Oblicza parametry fizyczne rzutu na podstawie kąta i prędkości
+         * Calculates physics parameters for projectile motion based on angle and speed
+         * 
+         * Wzory używane - Formulas used:
+         * - vx = v₀ · cos(α) - składowa pozioma prędkości
+         * - vy₀ = v₀ · sin(α) - początkowa składowa pionowa prędkości  
+         * - H = vy₀² / (2g) - maksymalna wysokość
+         * - T = 2vy₀ / g - całkowity czas lotu
+         */
+        function calculatePhysics(angleInput, speedInput) {
+            const rad = angleInput * PHYSICS.DEG_TO_RAD;        // Konwersja kąta na radiany
+            const vx = speedInput * Math.cos(rad);              // Składowa pozioma prędkości (stała)
+            const vy0 = speedInput * Math.sin(rad);             // Początkowa składowa pionowa prędkości
+            const maxHeight = (vy0 * vy0) / (2 * PHYSICS.GRAVITY);// Wzór na maksymalną wysokość
+            const maxRange = (speedInput ** 2) * Math.sin(2*rad) / PHYSICS.GRAVITY  //x = (v₀² * sin(2α)) / g
+            const totalTime = (2 * vy0) / PHYSICS.GRAVITY;          // Wzór na całkowity czas lotu
+            
+            return {
+                rad,
+                vx,
+                vy0,
+                maxHeight,
+                maxRange,
+                totalTime,
+                initialSpeed: speedInput
+            };
+        }
 
-        // Parametry wejscia
-        let angle = 45;
-        let speed = 30;
+        /**
+         * Oblicza pozycję i prędkość obiektu w danym czasie
+         * Calculates object position and velocity at given time
+         * 
+         * Wzory kinematyczne - Kinematic formulas:
+         * - x(t) = vx · t - pozycja pozioma
+         * - y(t) = vy₀ · t - ½gt² - pozycja pionowa  
+         * - vy(t) = vy₀ - gt - prędkość pionowa
+         * - v(t) = √(vx² + vy²) - prędkość chwilowa
+         */
+        function getPositionAtTime(physics, t) {
+            const x = physics.vx * t;                                           // Pozycja pozioma
+            const y = physics.vy0 * t - 0.5 * PHYSICS.GRAVITY * t * t;        // Pozycja pionowa (równanie ruchu jednostajnie przyspieszonego)
+            const vy = physics.vy0 - PHYSICS.GRAVITY * t;                      // Prędkość pionowa (zmniejsza się przez grawitację)
+            const currentSpeed = Math.sqrt(physics.vx * physics.vx + vy * vy); // Prędkość wypadkowa (twierdzenie Pitagorasa)
+            
+            return { x, y, vy, currentSpeed };
+        }
 
-        // Stan Symulacji
-        let time = 0;
-        let running = false;
-        let paused = false;
-        let lastFrameTime = null; // timestamp ostatniej klatki
-
-        // ### FUNKCJE ###
-
-        // Dynamiczne ustalanie skali w zależności od szerokości okna
+        // ### FUNKCJE KONFIGURACJI CANVAS ###
+        // ### CANVAS SETUP FUNCTIONS ###
+        
+        /**
+         * Ustala skalę rysowania na podstawie szerokości okna
+         * Determines drawing scale based on window width
+         */
         function determineScale() {
             const width = window.innerWidth;
-            scale = width < 800 ? 2 : width < 1100 ? 3 : 4;
-        } 
+            // Responsywna skala - mniejsze urządzenia = mniejsza skala
+            scale = width < 577 ? 2 : width < 939 ? 3 : width < 1279 ? 4 : 4;
+        }
 
-
-        // Ustawienie wymiarów canvas na podstawie skali i paddingu
+        /**
+         * Konfiguruje wymiary canvas
+         * Sets up canvas dimensions
+         */
         function setupCanvas() {
             determineScale();
-            canvas.width = 270 * scale + padding * 2;
-            canvas.height = 140 * scale + padding * 2;
+            canvas.width = CANVAS.BASE_WIDTH * scale + CANVAS.PADDING_SIDE * 2;
+            canvas.height = CANVAS.BASE_HEIGHT * scale + CANVAS.PADDING_UPDOWN * 2;
+        }
 
-}
+        // ### FUNKCJE RYSOWANIA ###
+        // ### DRAWING FUNCTIONS ###
         
-            
-        // Obliczanie i wyświetlanie danych początkowych w panelu wyników
-        function updateInitialValues() {
-            const rad = angle * Math.PI / 180; // zamiana stopni na radiany
-            const vx = speed * Math.cos(rad); // vx = v0 * cos(α) ---- trygonometria
-            const vy0 = speed * Math.sin(rad); // vy0 = v0 * sin(α) ---- trygonometria
+        /**
+         * Rysuje siatkę współrzędnych z etykietami
+         * Draws coordinate grid with labels
+         */
+        function drawGrid() {
+            const gridSpacing = scale * VISUAL.GRID_SPACING_MULTIPLIER;     // Odstęp między liniami siatki
+            const labelStep = (scale >= 4) ? 10 : (scale >= 3 ? 20 : 30);  // Krok etykiet zależny od skali
+            const labelOffset = 8;                            // Przesunięcie etykiet
 
-            v0Val.textContent = speed.toFixed(2);
-            hMaxVal.textContent = ((vy0 * vy0) / (2 * g)).toFixed(2); // wzor na max wysokosc
+            // Rysowanie linii siatki - Drawing grid lines
+            ctx.strokeStyle = "#333";
+            ctx.lineWidth = VISUAL.GRID_WIDTH;
+            ctx.beginPath();
+
+            // Linie pionowe - Vertical lines
+            for (let x = 0; x <= canvas.width - CANVAS.PADDING_SIDE * 2; x += gridSpacing) {
+                ctx.moveTo(CANVAS.PADDING_SIDE + x, CANVAS.PADDING_UPDOWN);
+                ctx.lineTo(CANVAS.PADDING_SIDE + x, canvas.height - CANVAS.PADDING_UPDOWN);
+            }
+
+            // Linie poziome - Horizontal lines  
+            for (let y = 0; y <= canvas.height - CANVAS.PADDING_UPDOWN * 2; y += gridSpacing) {
+                const py = canvas.height - CANVAS.PADDING_UPDOWN - y;
+                ctx.moveTo(CANVAS.PADDING_SIDE, py);
+                ctx.lineTo(canvas.width - CANVAS.PADDING_SIDE, py);
+            }
+            ctx.stroke();
+
+            // Rysowanie etykiet - Drawing labels
+            ctx.fillStyle = "#888";
+            ctx.font = `${Math.max(10, scale * 2.5)}px sans-serif`;
+            
+            // Etykiety osi X - X-axis labels
+            ctx.textAlign = "center";
+            ctx.textBaseline = "top";
+            for (let x = 0; x <= canvas.width - CANVAS.PADDING_UPDOWN * 2; x += gridSpacing) {
+                const val = x / scale;
+                if (val % labelStep === 0) {
+                    ctx.fillText(val.toFixed(0) + " m", CANVAS.PADDING_UPDOWN + x, canvas.height - CANVAS.PADDING_UPDOWN + labelOffset);
+                }
+            }
+
+            // Etykiety osi Y - Y-axis labels
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
+            for (let y = 0; y <= canvas.height - CANVAS.PADDING_SIDE * 2; y += gridSpacing) {
+                const val = y / scale;
+                if (val % labelStep === 0) {
+                    const py = canvas.height - CANVAS.PADDING_SIDE - y;
+                    ctx.fillText(val.toFixed(0) + " m", CANVAS.PADDING_SIDE - labelOffset, py);
+                }
+            }
+        }
+
+        /**
+         * Rysuje trajektorię lotu i aktualną pozycję obiektu
+         * Draws flight trajectory and current object position
+         */
+        function drawTrajectory(physics, currentTime) {
+            const tMax = Math.min(currentTime, physics.totalTime);  // Ograniczenie czasu do maksymalnego czasu lotu
+            
+            // Rysowanie ścieżki trajektorii - Drawing trajectory path
+            ctx.beginPath();
+            for (let i = 0; i <= CANVAS.TRAJECTORY_STEPS; i++) {
+                const t = (i / CANVAS.TRAJECTORY_STEPS) * tMax;     // Czas dla danego kroku
+                const position = getPositionAtTime(physics, t);     // Pozycja w czasie t
+                const px = CANVAS.PADDING_SIDE + position.x * scale;     // Konwersja na piksele X
+                const py = canvas.height - CANVAS.PADDING_UPDOWN - position.y * scale;  // Konwersja na piksele Y (odwrócona oś Y)
+                
+                if (i === 0) {
+                    ctx.moveTo(px, py);
+                } else {
+                    ctx.lineTo(px, py);
+                }
+            }
+            
+            ctx.strokeStyle = "lime";                               // Kolor trajektorii - zielony
+            ctx.lineWidth = VISUAL.TRAJECTORY_WIDTH;
+            ctx.stroke();
+
+            // Rysowanie aktualnej pozycji obiektu - Drawing current position ball
+            const currentPosition = getPositionAtTime(physics, currentTime);
+            if (currentPosition.y >= 0) {  // Rysuj tylko jeśli obiekt jest nad ziemią
+                const px = CANVAS.PADDING_SIDE + currentPosition.x * scale;
+                const py = canvas.height - CANVAS.PADDING_UPDOWN - currentPosition.y * scale;
+                
+                ctx.beginPath();
+                ctx.arc(px, py, VISUAL.BALL_RADIUS, 0, 2 * Math.PI);
+                ctx.fillStyle = "red";                              // Kolor obiektu - czerwony
+                ctx.fill();
+            }
+        }
+
+        // ### FUNKCJE AKTUALIZACJI ###
+        // ### UPDATE FUNCTIONS ###
+        
+        /**
+         * Aktualizuje wyświetlane wartości w interfejsie
+         * Updates displayed values in the interface
+         */
+        function updateDisplayValues(physics, position) {
+            czasVal.textContent = time.toFixed(2);
+            xVal.textContent = position.x.toFixed(2);
+            yVal.textContent = position.y.toFixed(2);
+            vxVal.textContent = physics.vx.toFixed(2);
+            vyVal.textContent = position.vy.toFixed(2);
+            RVal.textContent = physics.maxRange.toFixed(2);
+            vVal.textContent = position.currentSpeed.toFixed(2);
+            hMaxVal.textContent = physics.maxHeight.toFixed(2);
+        }
+
+        /**
+         * Aktualizuje wartości początkowe symulacji
+         * Updates initial simulation values
+         */
+        function updateInitialValues() {
+            cachedPhysics = calculatePhysics(angle, speed);         // Oblicz fizykę dla nowych parametrów
+            const initialPosition = getPositionAtTime(cachedPhysics, 0);    // Pozycja początkowa (t=0)
+            
+            updateDisplayValues(cachedPhysics, initialPosition);
+            // Wyzeruj wartości czasowe - Reset time values
             czasVal.textContent = "0.00";
             xVal.textContent = "0.00";
             yVal.textContent = "0.00";
-            vxVal.textContent = vx.toFixed(2);
-            vyVal.textContent = vy0.toFixed(2);
-            vVal.textContent = "0.00";
+            vVal.textContent = cachedPhysics.initialSpeed.toFixed(2);
         }
-        // Reset symulacji: czas, stan, ekran, siatka i dane początkowe
+
+        // ### KONTROLA SYMULACJI ###
+        // ### SIMULATION CONTROL ###
+        
+        /**
+         * Resetuje symulację do stanu początkowego
+         * Resets simulation to initial state
+         */
         function reset() {
-            time = 0;
-            running = false;
-            paused = false;
-            lastFrameTime = null;
+            time = 0;                       // Wyzeruj czas
+            running = false;                // Zatrzymaj symulację
+            paused = false;                 // Usuń pauzę
+            lastFrameTime = null;           // Wyzeruj czas ostatniej klatki
+            
+            // Wyczyść canvas i narysuj siatkę - Clear canvas and draw grid
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawGrid();
             updateInitialValues();
+            
+            // Aktualizuj stan przycisków - Update button states
             startBtn.disabled = false;
             pauseBtn.disabled = true;
             stopBtn.disabled = true;
         }
-        // Rysowanie siatki pomocniczej oraz oznaczeń metrowych osi X i Y
-        function drawGrid() {
-            const gridSpacing = scale * 10;
-            const labelStep = (scale >= 4) ? 10 : (scale >= 3 ? 20 : 30);
-            const labelOffset = 10 + scale * 2;
 
-            //siatka
-            ctx.strokeStyle = "#333";
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-
-            for (let x = 0; x <= canvas.width - padding * 2; x += gridSpacing) {
-                ctx.moveTo(padding + x, padding);
-                ctx.lineTo(padding + x, canvas.height - padding);
-            }
-
-            for (let y = 0; y <= canvas.height - padding * 2; y += gridSpacing) {
-                const py = canvas.height - padding - y;
-                ctx.moveTo(padding, py);
-                ctx.lineTo(canvas.width - padding, py);
-            }
-            //labelki
-            ctx.stroke();
-            ctx.fillStyle = "#888";
-            ctx.font = "10px sans-serif";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "top";
-
-            for (let x = 0; x <= canvas.width - padding * 2; x += gridSpacing) {
-                const val = x / scale;
-                if (val % labelStep === 0) {
-                    ctx.fillText(val.toFixed(0) + " m", padding + x, canvas.height - padding + 4);
-                }
-            }
-
-            ctx.textAlign = "right";
-            ctx.textBaseline = "middle";
-            for (let y = 0; y <= canvas.height - padding * 2; y += gridSpacing) {
-                const val = y / scale;
-                if (val % labelStep === 0) {
-                    const py = canvas.height - padding - y;
-                    ctx.fillText(val.toFixed(0) + " m", padding - labelOffset, py);
-                }
-            }
-        }
-        // Rysowanie trajektorii lotu i aktualnej pozycji obiektu
-        function drawTrajectory(time) {
-            const rad = angle * Math.PI / 180; // zamiana stopni na radiany
-            const vx = speed * Math.cos(rad); // vx = v0 * cos(α) ---- trygonometria
-            const vy0 = speed * Math.sin(rad); // vy0 = v0 * sin(α) ---- trygonometria
-            const totalTime = (2 * vy0) / g; // czas wznoszenia to vy0 / g  ---- * 2 to czas calkowity
-            const tMax = Math.min(time, totalTime);
-            const steps = 300;
-
-            ctx.beginPath();
-            for (let i = 0; i <= steps; i++) {
-                const t = (i / steps) * tMax;
-                const x = vx * t;
-                const y = vy0 * t - 0.5 * g * t * t;
-                const px = padding + x * scale;
-                const py = canvas.height - padding - y * scale;
-                if (i === 0) ctx.moveTo(px, py);
-                else ctx.lineTo(px, py);
-            }
-
-            ctx.strokeStyle = "lime";
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            const x = vx * time;
-            const y = vy0 * time - 0.5 * g * time * time;
-            if (y >= 0) {
-                const px = padding + x * scale;
-                const py = canvas.height - padding - y * scale;
-                ctx.beginPath();
-                ctx.arc(px, py, 5, 0, 2 * Math.PI);
-                ctx.fillStyle = "red";
-                ctx.fill();
-            }
-        }
-        // Główna pętla animacji: obliczenia fizyczne, rysowanie i aktualizacja wyników
+        /**
+         * Główna pętla animacji symulacji
+         * Main simulation animation loop
+         * 
+         * Używa requestAnimationFrame dla płynnej animacji
+         * Uses requestAnimationFrame for smooth animation
+         */
         function update(timestamp) {
             if (!running) return;
 
+            // Oblicz czas delta dla płynnej animacji niezależnej od FPS
+            // Calculate delta time for smooth FPS-independent animation
             if (!lastFrameTime) lastFrameTime = timestamp;
-            const deltaTime = (timestamp - lastFrameTime) / 1000;
+            const deltaTime = (timestamp - lastFrameTime) / 1000;  // Konwersja na sekundy
             lastFrameTime = timestamp;
             time += deltaTime;
 
-            const rad = angle * Math.PI / 180;     // zamiana stopni na radiany
-            const vx = speed * Math.cos(rad);		// vx = v0 * cos(α) ---- trygonometria
-            const vy0 = speed * Math.sin(rad);		// vy0 = v0 * sin(α) ---- trygonometria
-            const totalTime = (2 * vy0) / g;		// czas wznoszenia to vy0 / g  ---- * 2 to czas calkowity
-
-            if (time >= totalTime) {
-                time = totalTime;
-                running = false;
-                startBtn.disabled = false;
-                pauseBtn.disabled = true;
-                stopBtn.disabled = true;
+            // Sprawdź czy symulacja powinna się zakończyć
+            // Check if simulation should end
+            if (time >= cachedPhysics.totalTime) {
+                time = cachedPhysics.totalTime;     // Ogranicz czas do maksymalnego
+                running = false;                    // Zatrzymaj symulację
+                startBtn.disabled = false;          // Włącz przycisk Start
+                pauseBtn.disabled = true;           // Wyłącz przycisk Pauza
+                stopBtn.disabled = true;            // Wyłącz przycisk Stop
                 lastFrameTime = null;
             }
 
-            const x = vx * time;			// s = v*t  bo ruch jednostajny	
-            const y = vy0 * time - 0.5 * g * time * time;		 //  wzor na pozycje w czasie w ruchu jednostajnie opoznionym
-            const vy = vy0 - g * time;  	// wzor na predkosc w ruchu jednostajnie opoznionym
-            const v = Math.sqrt(vx * vx + vy * vy); // wzor na predkosc ruchu w dowolnej chwili z wykorzystaniem skladowych vx i vy
+            // Oblicz aktualną pozycję obiektu - Calculate current object position
+            const currentPosition = getPositionAtTime(cachedPhysics, time);
 
+            // Aktualizuj wyświetlanie - Update display
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawGrid();
-            drawTrajectory(time);
+            drawGrid();                                             // Narysuj siatkę
+            drawTrajectory(cachedPhysics, time);                   // Narysuj trajektorię
+            updateDisplayValues(cachedPhysics, currentPosition);    // Aktualizuj wartości
 
-            czasVal.textContent = time.toFixed(2);
-            xVal.textContent = x.toFixed(2);
-            yVal.textContent = y.toFixed(2);
-            vxVal.textContent = vx.toFixed(2);
-            vyVal.textContent = vy.toFixed(2);
-            vVal.textContent = v.toFixed(2);
-
-            if (running) requestAnimationFrame(update);
+            // Kontynuuj animację jeśli symulacja jest uruchomiona
+            // Continue animation if simulation is running
+            if (running) {
+                requestAnimationFrame(update);
+            }
         }
-        // Obsługa zmiany kąta i prędkości z suwaków
+
+        // ### OBSŁUGA ZDARZEŃ ###
+        // ### EVENT LISTENERS ###
+        
+        // Obsługa suwaka kąta - Angle slider handler
         angleSlider.oninput = () => {
             angle = parseFloat(angleSlider.value);
             angleVal.textContent = angle;
-            reset();
+            reset();    // Resetuj symulację po zmianie parametru
         };
 
+        // Obsługa suwaka prędkości - Speed slider handler
         speedSlider.oninput = () => {
             speed = parseFloat(speedSlider.value);
             speedVal.textContent = speed;
-            reset();
+            reset();    // Resetuj symulację po zmianie parametru
         };
-        // Obsługa przycisków Start / Pauza / Stop i przełączanie stanów symulacji
+
+        // Obsługa przycisku Start - Start button handler
         startBtn.onclick = () => {
             if (!running && paused) {
+                // Wznów z pauzy - Resume from pause
                 running = true;
                 paused = false;
                 lastFrameTime = null;
-                startBtn.disabled = true;
-                pauseBtn.disabled = false;
-                stopBtn.disabled = false;
-                requestAnimationFrame(update);
             } else if (!running && !paused) {
+                // Rozpocznij nową symulację - Start new simulation
                 reset();
                 running = true;
                 lastFrameTime = null;
-                startBtn.disabled = true;
-                pauseBtn.disabled = false;
-                stopBtn.disabled = false;
-                requestAnimationFrame(update);
             }
+            
+            // Aktualizuj stan przycisków - Update button states
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            stopBtn.disabled = false;
+            requestAnimationFrame(update);          // Rozpocznij animację
         };
 
+        // Obsługa przycisku Pauza - Pause button handler
         pauseBtn.onclick = () => {
-            running = false;
-            paused = true;
+            running = false;        // Zatrzymaj animację
+            paused = true;          // Oznacz jako wstrzymana
             startBtn.disabled = false;
             pauseBtn.disabled = true;
         };
 
+        // Obsługa przycisku Stop - Stop button handler
         stopBtn.onclick = () => {
-            reset();
+            reset();    // Pełny reset symulacji
         };
-        // Nasluchiwanie zmiany rozmiaru okna – przerysowanie siatki
+
+        // Obsługa zmiany rozmiaru okna - Window resize handler
         window.addEventListener("resize", () => {
-            setupCanvas();
-          //  drawGrid();
-          reset();
+            setupCanvas();      // Przebuduj canvas
+            reset();           // Resetuj symulację
         });
 
-        // Inicjalizacja: konfiguracja canvas i wyświetlenie danych startowych
-        setupCanvas();
-        reset();
+        // ### INICJALIZACJA ###
+        // ### INITIALIZATION ###
+        setupCanvas();      // Skonfiguruj canvas
+        reset();           // Zainicjalizuj symulację w stanie początkowym
+
+
+
