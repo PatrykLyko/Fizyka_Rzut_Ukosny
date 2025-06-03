@@ -27,7 +27,7 @@ html, body {
     text-align: center;
     overflow-x: hidden;
 }
-
+/* ### NAGŁÓWKI ### Headers */
 h1
 {
     margin: 8px;
@@ -48,7 +48,7 @@ h3 {
     color: var(--on-background-darkmode);
 }
 
-/* MAIN CONTAINER - układ responsywny */
+/* ### KONTENER GLOWNY SYMULACJI ### - Simulation Main Container */
 .main-container {
     display: flex;
     flex-wrap: wrap;
@@ -61,7 +61,7 @@ h3 {
     box-sizing: border-box;
 }
 
-/* PANEL BOCZNY - dla desktop wyśrodkowany wertykalnie względem canvas */
+/* ### PANEL BOCZNY ### Side Panel */
 .sidebar {
     flex: 1 1 320px;
     min-width: 350px;
@@ -69,21 +69,9 @@ h3 {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    align-self: center; /* Wyśrodkowanie wertykalne względem canvas */
+    align-self: center;
 }
-
-/* Kontrolki i wyniki */
-.controls, #result {
-    flex: 1 1;
-    min-width: 280px;
-}
-
-.controls span {
-font-weight:600;
-color:var(--on-button);
-}
-
-
+/* Naglowki panelu bocznego - Side Panel Headers */
 .sidebar h3 {
     grid-column: 1 / -1; /* Nagłówek zajmuje całą szerokość dla dwóch kolumn */
     width: 100%;
@@ -91,36 +79,31 @@ color:var(--on-button);
     text-align: center;
 }
 
-/* Canvas */
-.canvas-container {
-    flex: 2 1 500px;
-    width: fit-content;
-    margin-top: 0;
-    align-self: flex-start; /* Canvas pozostaje na górze */
+/* ### KONTROLKI I WYNIKI ### Controls and Results */
+.controls, #result {
+    flex: 1 1;
+    min-width: 280px;
+}
+/* Wartości suwaków - Sliders Values */
+.controls span {
+font-weight:600;
+color:var(--on-button);
 }
 
-canvas {
-    background: var(--canvas-bg);
-    touch-action: none;
-    border-radius: 12px;
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Suwaki */
+/* Etykieta suwaków - Sliders Label */
 label {
     display: block;
     margin-top: 10px;
     font-size: clamp(0.9rem, 2.5vw, 1rem);
 }
-
+/* Suwaki */
 input[type=range] {
     width: 90%;
     margin: 5px 0;
 }
 
-/* Przyciski z efektem hover */
+/* ### PRZYCISKI ### Buttons */
+
 .button-container {
     display: flex;
     flex-wrap: wrap;
@@ -172,7 +155,7 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* Wyniki */
+/* ### WYNIKI ### Results */
 #result {
     margin-top: 15px;
     font-size: clamp(0.8rem, 2.2vw, 0.95rem);
@@ -208,7 +191,27 @@ button:disabled {
     color: var(--accent-blue-400);
 }
 
-/* Sekcja edukacyjna */
+
+/* ### OBSZAR RYSOWANIA ### Canvas */
+.canvas-container {
+    flex: 2 1 500px;
+    width: fit-content;
+    margin-top: 0;
+    align-self: flex-start;
+}
+
+canvas {
+    background: var(--canvas-bg);
+    touch-action: none;
+    border-radius: 12px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+/* ### SEKCJA EDUKACYJNA - Educational Section */
+
 #edu-section {
     max-width: 1000px;
     margin: 40px auto;
@@ -290,8 +293,8 @@ button:disabled {
 .red-exp {
     color: var(--accent-red-500);
 }
-
-/* MEDIA QUERIES - tablety i urządzenia mobilne */
+/* ############## RESPONSYWNOSC ################## */
+/* MEDIA QUERIES - 1279 -> 938 -> 576 */
 
 
 @media (max-width: 1279px) {

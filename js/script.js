@@ -1,5 +1,5 @@
-   // ### STAŁE FIZYCZNE I KONFIGURACYJNE ### 
-        // ### PHYSICS AND CONFIGURATION CONSTANTS ###
+    // ### STAŁE FIZYCZNE I KONFIGURACYJNE ### 
+    // ### PHYSICS AND CONFIGURATION CONSTANTS ###
         const PHYSICS = {
             GRAVITY: 9.81,              // Przyspieszenie ziemskie w m/s² - Earth's gravitational acceleration
             DEG_TO_RAD: Math.PI / 180   // Konwersja stopni na radiany - Degrees to radians conversion
@@ -8,8 +8,8 @@
         const CANVAS = {
             BASE_WIDTH: 270,            // Podstawowa szerokość canvas - Base canvas width
             BASE_HEIGHT: 140,           // Podstawowa wysokość canvas - Base canvas height  
-            PADDING_SIDE: 45,
-            PADDING_UPDOWN: 45,                // Margines wokół obszaru rysowania - Padding around drawing area
+            PADDING_SIDE: 45,            // Margines LEFT I RIGHT obszaru rysowania - Padding LEFT RIGHT around drawing area
+            PADDING_UPDOWN: 45,          // Margines TOP I BOTTOM obszaru rysowania - Padding around drawing area
             TRAJECTORY_STEPS: 300       // Liczba kroków do rysowania trajektorii - Number of steps for trajectory drawing
         };
 
