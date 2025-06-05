@@ -42,8 +42,8 @@
     --grid-color: hsl(213, 13%, 32%);
     --label-color: hsl(213, 13%, 48%);
     /* Kolor trajektori i obiektu */
-    --trajectory-color:var(--accent-blue-400);
-    --ball-color: #15ff00;
+    --trajectory-color: #94e77f;
+    --ball-color: #b84d4d;
 
 
     /* FONT WEIGHT */
@@ -100,8 +100,8 @@ html.light-theme {
     --grid-color: hsl(213, 13%, 32%);
     --label-color: hsl(213, 13%, 48%);
     /* Kolor trajektori i obiektu */
-    --trajectory-color:var(--accent-blue-400);
-    --ball-color: #15ff00;
+    --trajectory-color: hsl(290, 65%, 33%);
+    --ball-color: #e23636;
 
         /* FONT WEIGHT */
     --weight-theme: 650;
