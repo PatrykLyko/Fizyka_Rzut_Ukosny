@@ -1,3 +1,9 @@
+    // ### ZMIENNE POBRANE ZE STYLOW CSS ###
+        const rootStyles = getComputedStyle(document.documentElement);
+        const gridColor = rootStyles.getPropertyValue('--grid-color').trim();
+        const labelColor = rootStyles.getPropertyValue('--label-color').trim();    
+        const trajectoryColor = rootStyles.getPropertyValue('--trajectory-color').trim();    
+        const ballColor = rootStyles.getPropertyValue('--ball-color').trim();   
     // ### STAŁE FIZYCZNE I KONFIGURACYJNE ### 
     // ### PHYSICS AND CONFIGURATION CONSTANTS ###
         const PHYSICS = {
@@ -8,11 +14,17 @@
         const CANVAS = {
             BASE_WIDTH: 270,            // Podstawowa szerokość canvas - Base canvas width
             BASE_HEIGHT: 140,           // Podstawowa wysokość canvas - Base canvas height  
-            PADDING_SIDE: 45,            // Margines LEFT I RIGHT obszaru rysowania - Padding LEFT RIGHT around drawing area
-            PADDING_UPDOWN: 45,          // Margines TOP I BOTTOM obszaru rysowania - Padding around drawing area
+            PADDING_TOP: 20,            // Margines Górny - Padding Top
+            PADDING_BOTTOM: 30,         // Margines Dolny - Padding Bottom
+            PADDING_LEFT: 35,           // Margines Lewy - Padding Left
+            PADDING_RIGHT: 18,          // Margines Prawy - Padding Right
+            PADDING_SIDE: 0,            // Margines LEFT I RIGHT obszaru rysowania - Padding LEFT RIGHT around drawing area
+            PADDING_UPDOWN: 0,        // Margines TOP I BOTTOM obszaru rysowania - Padding around drawing area
             TRAJECTORY_STEPS: 300       // Liczba kroków do rysowania trajektorii - Number of steps for trajectory drawing
         };
-
+             CANVAS.PADDING_SIDE = CANVAS.PADDING_LEFT + CANVAS.PADDING_RIGHT; //  PADDING LEFT + RIGHT
+             CANVAS.PADDING_UPDOWN = CANVAS.PADDING_BOTTOM + CANVAS.PADDING_TOP; // PADDING TOP + BOTTOM
+             
         const VISUAL = {
             GRID_SPACING_MULTIPLIER: 10,    // Mnożnik odstępów siatki - Grid spacing multiplier
             BALL_RADIUS: 5,                 // Promień kulki - Ball radius in pixels
@@ -85,7 +97,7 @@
             };
         }
 
-        /**
+        /*
          * Oblicza pozycję i prędkość obiektu w danym czasie
          * Calculates object position and velocity at given time
          * 
@@ -107,30 +119,29 @@
         // ### FUNKCJE KONFIGURACJI CANVAS ###
         // ### CANVAS SETUP FUNCTIONS ###
         
-        /**
+        /*
          * Ustala skalę rysowania na podstawie szerokości okna
          * Determines drawing scale based on window width
          */
         function determineScale() {
             const width = window.innerWidth;
-            // Responsywna skala - mniejsze urządzenia = mniejsza skala
             scale = width < 577 ? 2 : width < 939 ? 3 : width < 1279 ? 4 : 4;
         }
 
-        /**
+        /*
          * Konfiguruje wymiary canvas
          * Sets up canvas dimensions
          */
         function setupCanvas() {
             determineScale();
-            canvas.width = CANVAS.BASE_WIDTH * scale + CANVAS.PADDING_SIDE * 2;
-            canvas.height = CANVAS.BASE_HEIGHT * scale + CANVAS.PADDING_UPDOWN * 2;
+            canvas.width = CANVAS.BASE_WIDTH * scale + CANVAS.PADDING_LEFT + CANVAS.PADDING_RIGHT;
+            canvas.height = CANVAS.BASE_HEIGHT * scale + CANVAS.PADDING_TOP + CANVAS.PADDING_BOTTOM;
         }
 
         // ### FUNKCJE RYSOWANIA ###
         // ### DRAWING FUNCTIONS ###
         
-        /**
+        /*
          * Rysuje siatkę współrzędnych z etykietami
          * Draws coordinate grid with labels
          */
@@ -140,51 +151,51 @@
             const labelOffset = 8;                            // Przesunięcie etykiet
 
             // Rysowanie linii siatki - Drawing grid lines
-            ctx.strokeStyle = "#333";
+            ctx.strokeStyle = gridColor;
             ctx.lineWidth = VISUAL.GRID_WIDTH;
             ctx.beginPath();
 
             // Linie pionowe - Vertical lines
-            for (let x = 0; x <= canvas.width - CANVAS.PADDING_SIDE * 2; x += gridSpacing) {
-                ctx.moveTo(CANVAS.PADDING_SIDE + x, CANVAS.PADDING_UPDOWN);
-                ctx.lineTo(CANVAS.PADDING_SIDE + x, canvas.height - CANVAS.PADDING_UPDOWN);
+            for (let x = 0; x <= canvas.width - CANVAS.PADDING_LEFT - CANVAS.PADDING_RIGHT; x += gridSpacing) {
+                ctx.moveTo(CANVAS.PADDING_LEFT + x, CANVAS.PADDING_BOTTOM);
+                ctx.lineTo(CANVAS.PADDING_LEFT + x, canvas.height - CANVAS.PADDING_TOP);
             }
 
             // Linie poziome - Horizontal lines  
-            for (let y = 0; y <= canvas.height - CANVAS.PADDING_UPDOWN * 2; y += gridSpacing) {
-                const py = canvas.height - CANVAS.PADDING_UPDOWN - y;
-                ctx.moveTo(CANVAS.PADDING_SIDE, py);
-                ctx.lineTo(canvas.width - CANVAS.PADDING_SIDE, py);
+            for (let y = 0; y <= canvas.height - CANVAS.PADDING_TOP - CANVAS.PADDING_BOTTOM; y += gridSpacing) {
+                const py = canvas.height - CANVAS.PADDING_TOP - y;
+                ctx.moveTo(CANVAS.PADDING_LEFT, py);
+                ctx.lineTo(canvas.width - CANVAS.PADDING_RIGHT, py);
             }
             ctx.stroke();
 
             // Rysowanie etykiet - Drawing labels
-            ctx.fillStyle = "#888";
+            ctx.fillStyle = labelColor;
             ctx.font = `${Math.max(10, scale * 2.5)}px sans-serif`;
             
             // Etykiety osi X - X-axis labels
             ctx.textAlign = "center";
             ctx.textBaseline = "top";
-            for (let x = 0; x <= canvas.width - CANVAS.PADDING_UPDOWN * 2; x += gridSpacing) {
+            for (let x = 0; x <= canvas.width - CANVAS.PADDING_LEFT - CANVAS.PADDING_RIGHT; x += gridSpacing) {
                 const val = x / scale;
                 if (val % labelStep === 0) {
-                    ctx.fillText(val.toFixed(0) + " m", CANVAS.PADDING_UPDOWN + x, canvas.height - CANVAS.PADDING_UPDOWN + labelOffset);
+                    ctx.fillText(val.toFixed(0) + " m", CANVAS.PADDING_LEFT + x, canvas.height - CANVAS.PADDING_TOP + labelOffset);
                 }
             }
 
             // Etykiety osi Y - Y-axis labels
             ctx.textAlign = "right";
             ctx.textBaseline = "middle";
-            for (let y = 0; y <= canvas.height - CANVAS.PADDING_SIDE * 2; y += gridSpacing) {
+            for (let y = 0; y <= canvas.height - CANVAS.PADDING_TOP - CANVAS.PADDING_BOTTOM; y += gridSpacing) {
                 const val = y / scale;
                 if (val % labelStep === 0) {
-                    const py = canvas.height - CANVAS.PADDING_SIDE - y;
-                    ctx.fillText(val.toFixed(0) + " m", CANVAS.PADDING_SIDE - labelOffset, py);
+                    const py = canvas.height - CANVAS.PADDING_TOP - y;
+                    ctx.fillText(val.toFixed(0) + " m", CANVAS.PADDING_LEFT - labelOffset, py);
                 }
             }
         }
 
-        /**
+        /*
          * Rysuje trajektorię lotu i aktualną pozycję obiektu
          * Draws flight trajectory and current object position
          */
@@ -196,8 +207,8 @@
             for (let i = 0; i <= CANVAS.TRAJECTORY_STEPS; i++) {
                 const t = (i / CANVAS.TRAJECTORY_STEPS) * tMax;     // Czas dla danego kroku
                 const position = getPositionAtTime(physics, t);     // Pozycja w czasie t
-                const px = CANVAS.PADDING_SIDE + position.x * scale;     // Konwersja na piksele X
-                const py = canvas.height - CANVAS.PADDING_UPDOWN - position.y * scale;  // Konwersja na piksele Y (odwrócona oś Y)
+                const px = CANVAS.PADDING_LEFT + position.x * scale;     // Konwersja na piksele X
+                const py = canvas.height - CANVAS.PADDING_TOP - position.y * scale;  // Konwersja na piksele Y (odwrócona oś Y)
                 
                 if (i === 0) {
                     ctx.moveTo(px, py);
@@ -206,19 +217,19 @@
                 }
             }
             
-            ctx.strokeStyle = "lime";                               // Kolor trajektorii - zielony
+            ctx.strokeStyle = trajectoryColor;                               // Kolor trajektorii - zielony
             ctx.lineWidth = VISUAL.TRAJECTORY_WIDTH;
             ctx.stroke();
 
             // Rysowanie aktualnej pozycji obiektu - Drawing current position ball
             const currentPosition = getPositionAtTime(physics, currentTime);
             if (currentPosition.y >= 0) {  // Rysuj tylko jeśli obiekt jest nad ziemią
-                const px = CANVAS.PADDING_SIDE + currentPosition.x * scale;
-                const py = canvas.height - CANVAS.PADDING_UPDOWN - currentPosition.y * scale;
+                const px = CANVAS.PADDING_LEFT + currentPosition.x * scale;
+                const py = canvas.height - CANVAS.PADDING_TOP - currentPosition.y * scale;
                 
                 ctx.beginPath();
                 ctx.arc(px, py, VISUAL.BALL_RADIUS, 0, 2 * Math.PI);
-                ctx.fillStyle = "red";                              // Kolor obiektu - czerwony
+                ctx.fillStyle = ballColor;                              // Kolor obiektu - czerwony
                 ctx.fill();
             }
         }
@@ -386,6 +397,4 @@
         // ### INITIALIZATION ###
         setupCanvas();      // Skonfiguruj canvas
         reset();           // Zainicjalizuj symulację w stanie początkowym
-
-
 

@@ -1,0 +1,128 @@
+/* Design System - Do uzupełnienia! */
+:root {  
+    --accent-lime-500: #A3D348;
+    --accent-blue-400: #6CCDFF;
+    --accent-blue-300: #89DEFF;
+    --accent-blue-200: #B0EEFF;
+    --accent-red-500: #FF6551;
+
+/* Background -> Surface */
+    --color-bg: #111;
+    --color-small-surface: hsl(0, 0%, 8%);
+    --color-surface: #1c1c1c;
+    --primary-900: hsl(203, 13%, 90%);
+    --primary-800: hsl(203, 50%, 60%);
+    --primary-700: hsl(203, 60%, 50%);
+    --primary-600: hsl(203, 70%, 50%);
+    --primary-500: hsl(213, 13%, 50%);
+    --primary-400: hsl(213, 13%, 40%);
+    --primary-300: hsl(213, 13%, 30%);
+
+    --color-on-bg: hsl(213, 13%, 88%);
+    --color-on-bg2: hsl(203, 13%, 90%);
+    --btn-green-active: #10b981;
+    --btn-yellow-active: #facc15;
+    --btn--red-active: #ef4444;
+    --on-button: white;
+
+
+    --edu-section-bg: var(--color-surface);
+    --exp-edu-background: #212121;
+    --edu-code-bg: rgba(0, 0, 0, 0.4);
+
+    --edu-head2-color:hsl(203, 70%, 75%);
+    --edu-head3-color: #fcd34d;
+
+    --color-devider: rgb(40, 40, 40, 0.5);
+    --color-small-surface-border: hsl(213, 13%, 32%);
+    --color-icon-theme: hsl(213, 13%, 52%);
+     /* CANVAS */
+    --canvas-bg: transparent;
+    /* Kolory siatki i oznaczeń */
+    --grid-color: hsl(213, 13%, 32%);
+    --label-color: hsl(213, 13%, 48%);
+    /* Kolor trajektori i obiektu */
+    --trajectory-color:var(--accent-blue-400);
+    --ball-color: #15ff00;
+
+
+    /* FONT WEIGHT */
+    --weight-theme: 600;
+
+
+
+    --text-shadow: none;
+
+}
+
+/* ################### */
+/* ### LIGHT MODE ### */
+
+html.light-theme {
+    --accent-lime-500: #e648d1;
+    --accent-blue-200: hsl(200, 100%, 21%);
+    --accent-blue-300: #89DEFF;
+    --accent-blue-400: hsl(203, 80%, 50%);
+    --accent-red-500: #FF6551;
+
+    --color-bg: #f8f9fa;
+    --color-small-surface: hsl(213, 13%, 95%);
+    --color-surface: #f1f5f9;
+    --primary-900: hsl(203, 13%, 90%);
+    --primary-600: hsl(203, 50%, 60%);
+    --primary-700: hsl(203, 60%, 50%);
+    --primary-800: hsl(203, 70%,50%);
+    --primary-500: hsl(213, 13%, 50%);
+    --primary-400: hsl(213, 13%, 40%);
+    --primary-300: hsl(213, 13%, 30%);
+
+    --color-on-bg: hsl(213, 13%, 10%);
+    --color-on-bg2: hsl(203, 13%, 5%);
+
+    --btn-green-active: hsl(161, 94%, 30%);
+    --btn-yellow-active: hsl(32, 58%, 55%);
+    --btn--red-active: hsl(0, 58%, 55%);
+    --on-button: rgb(255, 255, 255);
+
+    --edu-section-bg:var(--color-surface);
+    --exp-edu-background: #f8f9fa;
+    --edu-code-bg: rgb(117, 131, 149, 0.3);
+
+    --edu-head2-color:hsl(203, 72%, 48%);
+    --edu-head3-color: hsl(290, 65%, 33%);
+
+    --color-devider: rgb(40, 40, 40, 0.5);
+    --color-small-surface-border: hsl(213, 13%, 32%);
+    --color-icon-theme: #24292f;
+    /* CANVAS */
+    --canvas-bg: transparent;
+    /* Kolory siatki i oznaczeń */
+    --grid-color: hsl(213, 13%, 32%);
+    --label-color: hsl(213, 13%, 48%);
+    /* Kolor trajektori i obiektu */
+    --trajectory-color:var(--accent-blue-400);
+    --ball-color: #15ff00;
+
+        /* FONT WEIGHT */
+    --weight-theme: 650;
+    --text-shadow: 0 0 0.5px rgba(0, 0, 0, 0.5);
+
+    /* --letter-spacing: 0.01; */
+
+
+/** Theme surface colors */
+--clr-surface-a0: #f2f2f2;
+--clr-surface-a10: #e5e5e5;
+--clr-surface-a20: #d8d8d8;
+--clr-surface-a30: #cbcbcb;
+--clr-surface-a40: #bebebe;
+--clr-surface-a50: #b1b1b1;
+
+/** Theme tonal surface colors */
+--clr-surface-tonal-a0: #eaf4e0;
+--clr-surface-tonal-a10: #dee6d5;
+--clr-surface-tonal-a20: #d1d9ca;
+--clr-surface-tonal-a30: #c5ccbf;
+--clr-surface-tonal-a40: #b9bfb4;
+--clr-surface-tonal-a50: #aeb2a9;
+        }

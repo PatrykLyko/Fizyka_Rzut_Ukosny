@@ -4,14 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Patryk Łyko - Symulacja rzutu ukośnego</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <script>
+  const theme = localStorage.getItem("theme");
+  if (theme === "light") {
+    document.documentElement.classList.add("light-theme");
+  }
+</script>
+<style>  html.is-loading body {
+    visibility: hidden;
+  }</style>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/root.css" >
+    <link rel="stylesheet" href="css/style.css" >
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/mediaquerrys.css" >
     <script src="js/script.js" defer></script>   
+    <script src="js/theme-toggle.js" defer></script> 
+    <script src="js/svg-loader.js" defer></script>   
 </head>
 <body>
-        <h1>Patryk Łyko - Symulacja rzutu ukośnego</h1>
+    <div id="topBar">
+        <h1>Patryk Łyko <span> - symulacja rzutu ukośnego</span></h1>
+            <button id="github-icon" class="icons" onclick="window.open('https://github.com/PatrykLyko', '_blank')" aria-label="GitHub">
+            </button>
+            <button id="theme-toggle"  class="theme-toggle"  class="icons" type="button" aria-label="DarkMode / LightMode" title="DarkMode / LightMode" >
+            </button>
+
+    </div>
     <div class="main-container">
 
         <div class="sidebar">
@@ -51,9 +72,9 @@
         </div>
         <!-- Obszar edukacyjny - wyjaśnienie zjawiska rzutu ukośnego - Educational section -->
         <div id="edu-section">
-            <h2 style="color:#93c5fd;">🚀 Jak działa symulacja rzutu ukośnego?</h2>
+            <h2>🚀 Jak działa symulacja rzutu ukośnego?</h2>
 
-            <h3 style="color:#fcd34d;">⚛️ Założenia fizyczne:</h3>
+            <h3>⚛️ Założenia fizyczne:</h3>
             <ul>
                 <li>Uwzględniamy jedynie <strong>przyspieszenie ziemskie</strong> <code>g = 9.81 m/s²</code>.</li>
                 <li><strong>Pomijamy opór powietrza</strong> – tor ruchu zależy tylko od kąta i prędkości początkowej, a masa, kształt i powierzchnia obiektu nie mają wpływu.</li>
@@ -69,7 +90,7 @@
                 <li>Czas wznoszenia i opadania są równe.</li>
             </ul>
 
-            <h3 style="color:#fcd34d;">🎯 Dane wejściowe użytkownika:</h3>
+            <h3>🎯 Dane wejściowe użytkownika:</h3>
             <ul>
                 <li><strong>Kąt wyrzutu</strong> – <code>α</code> (0–90°)</li>
                 <li><strong>Prędkość początkowa</strong> – <code>v₀</code> ( 0-50 m/s)</li>
@@ -98,7 +119,7 @@
                 </div>
             </div>  
 
-            <h3 style="color:#fcd34d;">📐 Wzory wykorzystywane w symulacji:</h3>
+            <h3>📐 Wzory wykorzystywane w symulacji:</h3>
             <ul>
                 <li><strong>Pozycje w czasie t:</strong>
                     <ul>
@@ -113,7 +134,7 @@
                 <li><strong>Zasięg:</strong> <code>R = (v₀² · sin(2α)) / g</code></li>
             </ul>
             
-            <h3 style="color:#fcd34d;">🔍 Co można zaobserwować?</h3>
+            <h3>🔍 Co można zaobserwować?</h3>
             <ul>
                 <li>Największy zasięg dla kąta <strong>45°</strong>.</li>
                 <li>Im większe <code>v₀</code>, tym wyższy i dalszy tor.</li>
