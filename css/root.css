@@ -39,7 +39,11 @@
     --edu-head3-color: #fcd34d;
 
     --color-small-surface-border: hsl(213, 13%, 32%);
-    --color-icon-theme: hsl(213, 13%, 52%);
+
+    --color-icon-active: hsl(213, 13%, 52%);
+    --color-icon-hover: hsl(213, 13%, 72%);
+
+    --color-logo: hsl(213, 13%, 88%);
      /* CANVAS */
     --canvas-bg: transparent;
     /* Kolory siatki i oznaczeń */
@@ -54,6 +58,8 @@
 
     --text-shadow: none;
 
+
+
 }
 
 /* ################### */
@@ -66,9 +72,10 @@ html.light-theme {
     --accent-blue-400: hsl(203, 80%, 50%);
     --accent-red-500: #FF6551;
 
-    --color-bg: #eceff1;  
-    /* --color-bg: #FFF; */
-        /* --color-bg: #F8F8F9; */
+    --color-bg: hsl(204, 15%, 94%);  
+
+    --color-primary: hsl(203, 80%, 45%);
+
     --color-small-surface: hsl(213, 13%, 95%);
     --color-surface: hsl(210, 40%, 96%);
     --primary-900: hsl(203, 13%, 90%);
@@ -79,8 +86,8 @@ html.light-theme {
     --primary-400: hsl(213, 13%, 40%);
     --primary-300: hsl(213, 13%, 30%);
 
-    --color-on-bg: hsl(213, 13%, 10%);
-    --color-on-bg2: hsl(203, 13%, 5%);
+    --color-on-bg: hsl(213, 53%, 10%);
+    --color-on-bg2: hsl(213, 53%, 5%);
 
     --btn-green-active: hsl(161, 94%, 30%);
     --btn-yellow-active: hsl(32, 58%, 55%);
@@ -94,9 +101,15 @@ html.light-theme {
     --edu-head2-color:hsl(203, 72%, 48%);
     --edu-head3-color: hsl(290, 65%, 33%);
 
-    --color-devider: rgb(40, 40, 40, 0.5);
+    --color-devider: hsl(213, 13%, 32%, 0.2);
     --color-small-surface-border: hsl(213, 13%, 32%);
-    --color-icon-theme: #24292f;
+
+    --color-icon-active: hsl(213, 23%, 20%);
+    --color-icon-hover: hsl(213, 23%, 40%);
+
+    --color-logo: hsl(213, 53%, 10%);
+    /* --color-icon-hover: var(--color-primary); */
+
     /* CANVAS */
     --canvas-bg: transparent;
     /* Kolory siatki i oznaczeń */

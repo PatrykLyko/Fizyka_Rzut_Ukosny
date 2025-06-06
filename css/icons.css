@@ -6,10 +6,10 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  fill: var(--color-icon-theme);
+  fill: var(--color-icon-active);
 }
 .icons:hover{
-  fill: hsl(213, 13%, 72%);
+  fill: var(--color-icon-hover);
 }
 
 #github-icon svg{
@@ -22,18 +22,18 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  fill: var(--color-icon-theme); 
+  fill: var(--color-icon-active); 
 }
 .theme-toggle svg{
 vertical-align: middle;
 }
 .theme-toggle:hover .sun {
-  fill: hsl(213, 13%, 72%); /* jaśniejszy żółty – np. dla słońca */
+  fill: var(--color-icon-hover);
 }
 
 /* Promienie – widoczne tylko jeśli nie są schowane klasą `rays-hidden` */
 .theme-toggle:hover .ray {
-  fill: hsl(213, 13%, 72%);                /* cieplejszy kolor na hover */
+  fill: var(--color-icon-hover);
   transform: scale(1.1);
   transform-origin: center;
 
