@@ -241,7 +241,7 @@ canvas {
     background: var(--edu-section-bg);
     border-radius: 12px;
     text-align: left;
-    color: var(--color-on-bg);
+    /* color: var(--color-on-bg); */
     font-size: clamp(0.9rem, 2.2vw, 1rem);
     line-height: 1.6em;
     box-sizing: border-box;
