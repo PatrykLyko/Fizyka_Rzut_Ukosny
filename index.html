@@ -10,9 +10,9 @@
     document.documentElement.classList.add("light-theme");
   }
 </script>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/root.css" >
     <link rel="stylesheet" href="./css/style.css" >
     <link rel="stylesheet" href="./css/icons.css">
@@ -23,12 +23,16 @@
 </head>
 <body>
     <div id="topBar">
-        <h1>Patryk Łyko <span> - symulacja rzutu ukośnego</span></h1>
+        <div id="logo-text">
+            <div id="logo"></div>
+            <h1>Patryk Łyko <span> - symulacja rzutu ukośnego</span></h1>
+        </div>
+        <div id="icons-panel">
             <button id="github-icon" class="icons" onclick="window.open('https://github.com/PatrykLyko', '_blank')" aria-label="GitHub">
             </button>
             <button id="theme-toggle"  class="theme-toggle"  class="icons" type="button" aria-label="DarkMode / LightMode" title="DarkMode / LightMode" >
             </button>
-
+        </div>
     </div>
     <div class="main-container">
 

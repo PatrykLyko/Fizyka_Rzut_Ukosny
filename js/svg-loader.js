@@ -13,3 +13,10 @@
     .then(svgData => {
       document.getElementById('theme-toggle').innerHTML = svgData;
     });
+
+          // Wczytaj plik SVG sun-moon.svg
+  fetch('./img/logo.svg')
+    .then(response => response.text())
+    .then(svgData => {
+      document.getElementById('logo').innerHTML = svgData;
+    });

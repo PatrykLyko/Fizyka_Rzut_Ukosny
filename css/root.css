@@ -1,15 +1,20 @@
 /* Design System - Do uzupełnienia! */
 :root {  
     --accent-lime-500: #A3D348;
-    --accent-blue-400: #6CCDFF;
-    --accent-blue-300: #89DEFF;
+    --accent-blue-400: #6CCDFF;      
     --accent-blue-200: #B0EEFF;
     --accent-red-500: #FF6551;
 
 /* Background -> Surface */
-    --color-bg: #111;
-    --color-small-surface: hsl(0, 0%, 8%);
-    --color-surface: #1c1c1c;
+    --color-bg: hsl(213, 13%, 12%);
+    --color-surface: hsl(213, 13%, 18%);
+    --color-small-surface: hsl(213, 13%, 12%);
+
+    --color-devider: hsl(213, 13%, 52%, 0.2);
+
+    --color-primary: hsl(203, 70%, 75%);
+
+
     --primary-900: hsl(203, 13%, 90%);
     --primary-800: hsl(203, 50%, 60%);
     --primary-700: hsl(203, 60%, 50%);
@@ -27,13 +32,12 @@
 
 
     --edu-section-bg: var(--color-surface);
-    --exp-edu-background: #212121;
+    /* --exp-edu-background: #212121; */
     --edu-code-bg: rgba(0, 0, 0, 0.4);
 
     --edu-head2-color:hsl(203, 70%, 75%);
     --edu-head3-color: #fcd34d;
 
-    --color-devider: rgb(40, 40, 40, 0.5);
     --color-small-surface-border: hsl(213, 13%, 32%);
     --color-icon-theme: hsl(213, 13%, 52%);
      /* CANVAS */
@@ -42,14 +46,11 @@
     --grid-color: hsl(213, 13%, 32%);
     --label-color: hsl(213, 13%, 48%);
     /* Kolor trajektori i obiektu */
-    --trajectory-color: #94e77f;
-    --ball-color: #b84d4d;
+    --trajectory-color: #3391cc;
+    --ball-color: #cc338e;
 
 
-    /* FONT WEIGHT */
-    --weight-theme: 600;
-
-
+    /* TEXT SHADOW FOR LIGHT THEME */
 
     --text-shadow: none;
 
@@ -65,9 +66,11 @@ html.light-theme {
     --accent-blue-400: hsl(203, 80%, 50%);
     --accent-red-500: #FF6551;
 
-    --color-bg: #f8f9fa;
+    --color-bg: #eceff1;  
+    /* --color-bg: #FFF; */
+        /* --color-bg: #F8F8F9; */
     --color-small-surface: hsl(213, 13%, 95%);
-    --color-surface: #f1f5f9;
+    --color-surface: hsl(210, 40%, 96%);
     --primary-900: hsl(203, 13%, 90%);
     --primary-600: hsl(203, 50%, 60%);
     --primary-700: hsl(203, 60%, 50%);
@@ -100,11 +103,10 @@ html.light-theme {
     --grid-color: hsl(213, 13%, 32%);
     --label-color: hsl(213, 13%, 48%);
     /* Kolor trajektori i obiektu */
-    --trajectory-color: hsl(290, 65%, 33%);
-    --ball-color: #e23636;
+    --trajectory-color: #3391cc;
+    --ball-color: #cc338e;
 
-        /* FONT WEIGHT */
-    --weight-theme: 650;
+        /* TEXT SHADOW FOR LIGHT THEME */
     --text-shadow: 0 0 0.5px rgba(0, 0, 0, 0.5);
 
     /* --letter-spacing: 0.01; */
