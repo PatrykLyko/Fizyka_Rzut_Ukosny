@@ -130,10 +130,27 @@
   padding-bottom: 4px;
   gap: 6px;
 } */
+.hide-small-screen {
+  /* visibility: hidden; */
+}
+#logo-text{
+    gap: 0px;
+
+}
+#logo {
+  height: fit-content;
+}
+#logo svg{
+    height: 16px;
+}
 
 #topBar h1{
-  font-size: 8px;
+  font-size: 14px;
   /* font-weight: var(--weight-theme); */
+}
+
+#icons-panel{
+  gap: 2px;
 }
 
 #github-icon svg{

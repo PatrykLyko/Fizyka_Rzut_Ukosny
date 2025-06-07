@@ -33,7 +33,7 @@
 
     --edu-section-bg: var(--color-surface);
     /* --exp-edu-background: #212121; */
-    --edu-code-bg: rgba(0, 0, 0, 0.4);
+    --edu-code-bg: hsl(213, 13%, 14%);;
 
     --edu-head2-color:hsl(203, 70%, 75%);
     --edu-head3-color: #fcd34d;

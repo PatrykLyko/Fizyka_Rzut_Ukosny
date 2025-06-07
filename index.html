@@ -7,13 +7,11 @@
     <script>
   const theme = localStorage.getItem("theme");
   if (theme === "light") {
-    document.documentElement.classList.add("light-theme");
-  }
+    document.documentElement.classList.add("light-theme");}
 </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/root.css" >
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">   <link rel="stylesheet" href="./css/root.css" >
     <link rel="stylesheet" href="./css/style.css" >
     <link rel="stylesheet" href="./css/icons.css">
     <link rel="stylesheet" href="./css/mediaquerrys.css" >
@@ -25,7 +23,7 @@
     <div id="topBar">
         <div id="logo-text">
             <div id="logo"></div>
-            <h1>Patryk Łyko <span> - symulacja rzutu ukośnego</span></h1>
+            <h1><span>Patryk Łyko</span><span class="hide-small-screen">/ fizyka - rzut ukośny</span></h1>
         </div>
         <div id="icons-panel">
             <button id="github-icon" class="icons" onclick="window.open('https://github.com/PatrykLyko', '_blank')" aria-label="GitHub">
