@@ -17,7 +17,7 @@
  vertical-align: middle;
 }
 
-/* Ikona Theme Toggle */
+/* Ikona Theme Toggle + klasy animacji*/
 .theme-toggle{
   background: transparent;
   border: none;
@@ -31,7 +31,6 @@ vertical-align: middle;
   fill: var(--color-icon-hover);
 }
 
-/* Promienie – widoczne tylko jeśli nie są schowane klasą `rays-hidden` */
 .theme-toggle:hover .ray {
   transform: scale(1.1);
   fill: var(--color-icon-hover);
