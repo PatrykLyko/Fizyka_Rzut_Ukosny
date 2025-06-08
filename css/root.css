@@ -1,57 +1,55 @@
-/* Design System - Do uzupełnienia! */
-:root {  
-    --accent-lime-500: #A3D348;
-    --accent-blue-400: #6CCDFF;      
-    --accent-blue-200: #B0EEFF;
-    --accent-red-500: #FF6551;
-
-/* Background -> Surface */
+/* Design System  */
+:root {    
+/* Colors HSL - DARK MODE  */
     --color-bg: hsl(213, 13%, 12%);
     --color-surface: hsl(213, 13%, 18%);
     --color-small-surface: hsl(213, 13%, 12%);
 
-    --color-devider: hsl(213, 13%, 52%, 0.2);
-
-    --color-primary: hsl(203, 70%, 75%);
-
-
-    --primary-900: hsl(203, 13%, 90%);
-    --primary-800: hsl(203, 50%, 60%);
-    --primary-700: hsl(203, 60%, 50%);
-    --primary-600: hsl(203, 70%, 50%);
-    --primary-500: hsl(213, 13%, 50%);
-    --primary-400: hsl(213, 13%, 40%);
-    --primary-300: hsl(213, 13%, 30%);
-
     --color-on-bg: hsl(213, 13%, 88%);
     --color-on-bg2: hsl(203, 13%, 90%);
-    --btn-green-active: #10b981;
-    --btn-yellow-active: #facc15;
-    --btn--red-active: #ef4444;
-    --on-button: white;
 
+    --color-divider: hsl(213, 13%, 52%, 0.2);
+
+    --color-primary: hsl(203, 70%, 75%);
+    --color-primary-strong: hsl(203, 75%, 70%);
+    --color-primary-stronger: hsl(203, 60%, 50%);;
+    --color-primary-weak: hsl(203, 90%, 85%);
+
+    --color-drawing-blue: hsl(200, 100%, 71%);
+    --color-drawing-red: hsl(7, 100%, 66%);
+    --color-drawing-green: hsl(81, 61%, 55%);
+    --color-drawing-yellow: hsl(52, 100%, 70%);
+    --color-drawing-gray: hsl(0, 0%, 53%);
+    --color-drawing-red-weak: hsl(17, 100%, 79%);
+    --color-drawing-red-weak: hsl(193, 100%, 85%);
+
+    --color-bttn-green-active: hsl(160, 65%, 39%);
+    --color-bttn-yellow-active: hsl(48, 50%, 63%);
+    --color-bttn--red-active: hsl(0, 75%, 60%);
+    --on-bttn: hsl(0, 0%, 100%);
 
     --edu-section-bg: var(--color-surface);
-    /* --exp-edu-background: #212121; */
     --edu-code-bg: hsl(213, 13%, 14%);;
 
     --edu-head2-color:hsl(203, 70%, 75%);
-    --edu-head3-color: #fcd34d;
+    --edu-head3-color: hsl(46, 97%, 65%);
 
+    --color-surface-border: transparent;
     --color-small-surface-border: hsl(213, 13%, 32%);
 
     --color-icon-active: hsl(213, 13%, 52%);
     --color-icon-hover: hsl(213, 13%, 72%);
 
     --color-logo: hsl(213, 13%, 88%);
-     /* CANVAS */
+
+    /* tokeny dla CANVAS */
     --canvas-bg: transparent;
-    /* Kolory siatki i oznaczeń */
+
     --grid-color: hsl(213, 13%, 32%);
     --label-color: hsl(213, 13%, 48%);
-    /* Kolor trajektori i obiektu */
-    --trajectory-color: #3391cc;
-    --ball-color: #cc338e;
+
+    --trajectory-color: hsl(203, 60%, 50%);
+    --ball-color: hsl(324, 60%, 50%);
 
 
     /* TEXT SHADOW FOR LIGHT THEME */
@@ -66,78 +64,58 @@
 /* ### LIGHT MODE ### */
 
 html.light-theme {
-    --accent-lime-500: #e648d1;
-    --accent-blue-200: hsl(200, 100%, 21%);
-    --accent-blue-300: #89DEFF;
-    --accent-blue-400: hsl(203, 80%, 50%);
-    --accent-red-500: #FF6551;
-
-    --color-bg: hsl(204, 15%, 94%);  
-
-    --color-primary: hsl(203, 80%, 45%);
-
-    --color-small-surface: hsl(213, 13%, 95%);
-    --color-surface: hsl(210, 40%, 96%);
-    --primary-900: hsl(203, 13%, 90%);
-    --primary-600: hsl(203, 50%, 60%);
-    --primary-700: hsl(203, 60%, 50%);
-    --primary-800: hsl(203, 70%,50%);
-    --primary-500: hsl(213, 13%, 50%);
-    --primary-400: hsl(213, 13%, 40%);
-    --primary-300: hsl(213, 13%, 30%);
+    /* Colors HSL - LIGHT MODE  */
+    --color-bg: hsl(203, 15%, 94%);  
+    --color-surface: hsl(203, 15%, 94%);
+    --color-small-surface: hsl(203, 15%, 94%);
 
     --color-on-bg: hsl(213, 53%, 10%);
     --color-on-bg2: hsl(213, 53%, 5%);
 
-    --btn-green-active: hsl(161, 94%, 30%);
-    --btn-yellow-active: hsl(32, 58%, 55%);
-    --btn--red-active: hsl(0, 58%, 55%);
-    --on-button: rgb(255, 255, 255);
+    --color-devider: hsl(213, 13%, 32%, 0.2);
 
-    --edu-section-bg:var(--color-surface);
-    --exp-edu-background: #f8f9fa;
+    --color-primary: hsl(203, 80%, 45%);
+    --color-primary-strong: hsl(203, 80%, 15%);
+    --color-primary-stronger: hsl(203, 60%, 50%);
+    --color-primary-weak: hsl(203, 60%, 50%);
+
+    --color-drawing-blue: hsl(200, 100%, 71%);
+    --color-drawing-red: hsl(7, 100%, 66%);
+    --color-drawing-green: hsl(81,1%, 40%);
+    --color-drawing-yellow: hsl(52, 100%, 70%);
+    --color-drawing-gray: hsl(0, 0%, 53%);
+    --color-drawing-red-weak: hsl(17, 100%, 79%);
+    --color-drawing-red-weak: hsl(193, 100%, 85%);
+
+    --color-bttn-green-active: hsl(161, 94%, 30%);
+    --color-bttn-yellow-active: hsl(32, 58%, 55%);
+    --color-bttn--red-active: hsl(0, 58%, 55%);
+    --on-bttn: rgb(255, 255, 255);
+
+    --edu-section-bg: var(--color-surface);
     --edu-code-bg: rgb(117, 131, 149, 0.3);
 
     --edu-head2-color:hsl(203, 72%, 48%);
     --edu-head3-color: hsl(290, 65%, 33%);
 
-    --color-devider: hsl(213, 13%, 32%, 0.2);
+    --color-surface-border: hsl(213, 13%, 82%);
     --color-small-surface-border: hsl(213, 13%, 32%);
 
     --color-icon-active: hsl(213, 23%, 20%);
     --color-icon-hover: hsl(213, 23%, 40%);
 
     --color-logo: hsl(213, 53%, 10%);
-    /* --color-icon-hover: var(--color-primary); */
 
-    /* CANVAS */
+    /* tokeny dla CANVAS */
     --canvas-bg: transparent;
-    /* Kolory siatki i oznaczeń */
+
     --grid-color: hsl(213, 13%, 32%);
     --label-color: hsl(213, 13%, 48%);
-    /* Kolor trajektori i obiektu */
-    --trajectory-color: #3391cc;
-    --ball-color: #cc338e;
 
-        /* TEXT SHADOW FOR LIGHT THEME */
+    --trajectory-color: hsl(203, 60%, 50%);
+    --ball-color: hsl(324, 60%, 50%);
+
+    /* TEXT SHADOW FOR LIGHT THEME */
+
     --text-shadow: 0 0 0.5px rgba(0, 0, 0, 0.5);
-
-    /* --letter-spacing: 0.01; */
-
-
-/** Theme surface colors */
---clr-surface-a0: #f2f2f2;
---clr-surface-a10: #e5e5e5;
---clr-surface-a20: #d8d8d8;
---clr-surface-a30: #cbcbcb;
---clr-surface-a40: #bebebe;
---clr-surface-a50: #b1b1b1;
-
-/** Theme tonal surface colors */
---clr-surface-tonal-a0: #eaf4e0;
---clr-surface-tonal-a10: #dee6d5;
---clr-surface-tonal-a20: #d1d9ca;
---clr-surface-tonal-a30: #c5ccbf;
---clr-surface-tonal-a40: #b9bfb4;
---clr-surface-tonal-a50: #aeb2a9;
         }

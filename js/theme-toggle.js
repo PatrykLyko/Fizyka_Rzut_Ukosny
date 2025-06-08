@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("theme-toggle");
+  const btn = document.getElementById("theme-icon");
   const root = document.documentElement;
 
   let isMoon = true;        // true = ikona w stanie księżyca

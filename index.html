@@ -3,73 +3,83 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" href="favicon-light-theme.ico" type="image/x-icon">
+    <link rel="icon" href="favicon-light-theme.ico" media="(prefers-color-scheme: light)" type="image/x-icon">
+    <link rel="icon" href="favicon-dark-theme.ico" media="(prefers-color-scheme: dark)" type="image/x-icon">
     <title>Patryk Łyko - Symulacja rzutu ukośnego</title>
+
     <script>
-  const theme = localStorage.getItem("theme");
-  if (theme === "light") {
-    document.documentElement.classList.add("light-theme");}
-</script>
- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">   <link rel="stylesheet" href="./css/root.css" >
+            const theme = localStorage.getItem("theme");
+             if (theme === "light") {
+             document.documentElement.classList.add("light-theme");}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">  
+    
+    <link rel="stylesheet" href="./css/root.css" >
     <link rel="stylesheet" href="./css/style.css" >
     <link rel="stylesheet" href="./css/icons.css">
     <link rel="stylesheet" href="./css/mediaquerrys.css" >
+    
     <script src="./js/script.js" defer></script>   
     <script src="./js/theme-toggle.js" defer></script> 
     <script src="./js/svg-loader.js" defer></script>   
 </head>
+
 <body>
-    <div id="topBar">
-        <div id="logo-text">
-            <div id="logo"></div>
-            <h1><span>Patryk Łyko</span><span class="hide-small-screen">/ fizyka - rzut ukośny</span></h1>
+    <!-- Topbar - Panel górny -->
+    <div id="topbar-container">
+        <div id="topbar-header">
+            <div id="logo-container"></div>
+            <h1><span>Patryk Łyko</span><span class="hide-small-screen">/ Fizyka - rzut ukośny</span></h1>
         </div>
-        <div id="icons-panel">
+        <div id="topbar-icons">
             <button id="github-icon" class="icons" onclick="window.open('https://github.com/PatrykLyko', '_blank')" aria-label="GitHub">
             </button>
-            <button id="theme-toggle"  class="theme-toggle"  class="icons" type="button" aria-label="DarkMode / LightMode" title="DarkMode / LightMode" >
+            <button id="theme-icon"  class="theme-toggle"  class="icons" type="button" aria-label="DarkMode / LightMode" title="DarkMode / LightMode" >
             </button>
         </div>
     </div>
-    <div class="main-container">
-
+    <div id="main-container">
         <div class="sidebar">
+            <!-- Input controls section - Sekcja danych wejściowych -->
+            <div class="controls">
+                    <h3>DANE WEJŚCIOWE:</h3>
+                    <label>Kąt rzutu: <span id="angleVal">45</span>°</label>
+                    <input type="range" id="angle" min="0" max="90" value="45" />
+                    <label>Prędkość początkowa: <span id="speedVal">25</span> m/s</label>
+                    <input type="range" id="speed" min="0" max="50" value="25" />
+                <!-- Simulation control buttons - Przyciski kontroli symulacji -->        
+                <div class="button-container">
+                    <button id="startBtn" class="green-button">Start</button>
+                    <button id="pauseBtn" class="yellow-button" disabled>Pauza</button>
+                    <button id="stopBtn" class="red-button" disabled>Stop</button>
+                </div>
+            </div>
+                <!-- Results area - Sekcja Wyników-->
+            <div class="result">
+                    <h3>WYNIKI:</h3>
+                    <div>Czas: <span id="czasVal">0.00</span> <span class="units">s</span></div>
+                    <div>Prędkość v(t) <span id="vVal">0.00</span> <span class="units">m/s</span></div>
+                    <div>Prędkość vₓ <span id="vxVal">0.00</span> <span class="units">m/s</span></div>
+                    <div>Prędkość vᵧ <span id="vyVal">0.00</span> <span class="units">m/s</span></div>
+                    <div>Pozycja x <span id="xVal">0.00</span> <span class="units">m</span></div>
+                    <div>Pozycja y <span id="yVal">0.00</span> <span class="units">m</span></div>
+                    <div>Zasięg <span id="RVal">0.00</span> <span class="units">m</span></div>
+                    <div>Max h <span id="hMaxVal">0.00</span> <span class="units">m</span></div>
+            </div>
+        </div>
 
-        <!-- Kontroli danych wejściowych - Input controls section -->
-        <div class="controls">
-            <h3>DANE WEJŚCIOWE:</h3>
-            <label>Kąt rzutu: <span id="angleVal">45</span>°</label>
-            <input type="range" id="angle" min="0" max="90" value="45" />
-            <label>Prędkość początkowa: <span id="speedVal">25</span> m/s</label>
-            <input type="range" id="speed" min="0" max="50" value="25" />
-            <!-- Przyciski obslugi symulacji - Simulation control buttons -->        
-            <div class="button-container">
-                <button id="startBtn" class="green-button">Start</button>
-                <button id="pauseBtn" class="yellow-button" disabled>Pauza</button>
-                <button id="stopBtn" class="red-button" disabled>Stop</button>
-            </div>
-            </div>
-            <!-- Obszar wyświetlania wyników - Results display area -->
-            <div id="result">
-                <h3>WYNIKI:</h3>
-                <div>Czas: <span id="czasVal">0.00</span> <span class="units">s</span></div>
-                <div>Prędkość v(t) <span id="vVal">0.00</span> <span class="units">m/s</span></div>
-                <div>Prędkość vₓ <span id="vxVal">0.00</span> <span class="units">m/s</span></div>
-                <div>Prędkość vᵧ <span id="vyVal">0.00</span> <span class="units">m/s</span></div>
-                <div>Pozycja x <span id="xVal">0.00</span> <span class="units">m</span></div>
-                <div>Pozycja y <span id="yVal">0.00</span> <span class="units">m</span></div>
-                <div>Zasięg <span id="RVal">0.00</span> <span class="units">m</span></div>
-                <div>Max h <span id="hMaxVal">0.00</span> <span class="units">m</span></div>
-            </div>
-            </div>
-
-        <!-- Obszar rysowania symulacji CANVAS - Simulation drawing area -->
+        <!-- CANVAS - Simulation drawing area - Obszar rysowania -->
         <div class="canvas-container">
             <canvas id="canvas"></canvas>
         </div>
         </div>
-        <!-- Obszar edukacyjny - wyjaśnienie zjawiska rzutu ukośnego - Educational section -->
+
+        <!-- Educational section - Sekcja Edukacyjna -->
         <div id="edu-section">
             <h2>🚀 Jak działa symulacja rzutu ukośnego?</h2>
 
@@ -93,16 +103,17 @@
             <ul>
                 <li><strong>Kąt wyrzutu</strong> – <code>α</code> (0–90°)</li>
                 <li><strong>Prędkość początkowa</strong> – <code>v₀</code> ( 0-50 m/s)</li>
-            </ul>
-            <p>Na ich podstawie wyznaczamy:</p>
+                </ul>
+
+                <p>Na ich podstawie wyznaczamy:</p>
+
             <ul>
                 <li><code>vₓ = v₀ · cos(α)</code> — pozioma składowa prędkości (stała)</li>
                 <li><code>vᵧ₀ = v₀ · sin(α)</code> — pionowa składowa prędkości (zmienna)</li>
             </ul>
 
             <div class="svg-info-wrapper">
-                <!-- SVG Illustration placeholder - in real implementation, use the actual SVG file -->
-           <img src="./img/skladowe.svg" alt="Szkic wektorowy" class="vector-illustration" />
+                <img src="./img/skladowe.svg" alt="Szkic wektorowy" class="vector-illustration" />
                 
                 <div class="explanation-container">
                     <h3>FUNKCJE TRYGONOMETRYCZNE:</h3>

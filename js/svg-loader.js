@@ -11,12 +11,12 @@
   fetch('./img/sun-moon.svg')
     .then(response => response.text())
     .then(svgData => {
-      document.getElementById('theme-toggle').innerHTML = svgData;
+      document.getElementById('theme-icon').innerHTML = svgData;
     });
 
           // Wczytaj plik SVG sun-moon.svg
   fetch('./img/logo.svg')
     .then(response => response.text())
     .then(svgData => {
-      document.getElementById('logo').innerHTML = svgData;
+      document.getElementById('logo-container').innerHTML = svgData;
     });

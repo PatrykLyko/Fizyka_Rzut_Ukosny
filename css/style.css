@@ -1,83 +1,115 @@
+ /* ==========================================================
+   STRUKTURA I ORGANIZACJA STYLU (Style Guide)
+==========================================================
+
+Wszystkie reguły CSS są uporządkowane według schematu:
+- Każda sekcja ma wyraźny nagłówek w komentarzu.
+- Wewnątrz każdej reguły stylu atrybuty są uporządkowane według kategorii:
+
+  1. Layout        – display, flex/grid, position, align, etc.
+  2. Box model     – margin, padding, width, height, etc.
+  3. Typografia    – font, text, line-height, white-space, etc.
+  4. Kolory        – color, background, border, shadow, etc.
+  5. Interakcje    – transition, animation, transform, etc.
+  6. Inne          – np. cursor, z-index, box-sizing itp.
+
+- Kategorie oddzielone są pustą linią dla zwiększenia czytelności.
+========================================================== */
+
+/* ========================================================== /
+=== GLOBALNE ===
+/  ==========================================================*/
  body {
     min-width: 320px;
     margin: 0;
     padding: 16px;
+    overflow-x: hidden;
+ 
+    font-family:"Noto Sans", "Mona Sans","IBM Plex Sans", sans-serif;
+    font-optical-sizing: auto; 
+    text-align: center;    
+    text-shadow: var(--text-shadow);
+
     background: var(--color-bg);
     color: var(--color-on-bg);
-    font-family:"Noto Sans", "Mona Sans","IBM Plex Sans", sans-serif;
-    text-align: center;
-    overflow-x: hidden;
-
-     font-optical-sizing: auto;  
-   /* font-weight: var(--weight-theme) ; */
-
-    text-shadow: var(--text-shadow);
 }
 
-#topBar{ 
-  display:flex;
-  flex-direction:row;
-  justify-content: space-between;
-  max-width: 1600px;
-  margin:auto;
-  border-bottom: 1px solid var(--color-devider);
-  padding-bottom: 12px;
-  gap: 6px;
+/* ========================================================== /
+=== TOPBAR SECTION ===
+/  ==========================================================*/
+#topbar-container{ 
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+
+    max-width: 1600px;
+    margin:auto;
+    padding-bottom: 12px;
+
+    border-bottom: 1px solid var(--color-divider);
 }
-#logo-text{
+
+    #topbar-header{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        min-width: 50%;
+    }
+
+        #logo-container {
+            height: auto;
+            padding: 0;
+            margin: 0;
+        }
+
+            #logo-container svg{
+                display: block;
+                height: 24px;
+            }
+
+        #topbar-header h1{
+            margin: 8px;
+
+            font-family: "Outfit" , "Mona Sans" , sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: left;
+            white-space: nowrap;
+
+            color:var(--color-on-bg2); 
+        }
+
+            #topbar-header h1 span:first-of-type{
+                margin-right: 4px;
+                
+                color:var(--color-primary);
+            }
+
+    #topbar-icons{
+        display: flex;
+        flex-direction: row;
+
+        gap: 12px;   
+    }
+
+/* ========================================================== /
+=== MAIN-CONTAINER === CONTROLS + RESULT + CANVAS
+/  ==========================================================*/
+
+#main-container {
     display: flex;
-    flex-direction: row;
-    min-width: 50%;
-    gap: 4px;
-    align-items: center;
-    justify-content: flex-start;
-}
-#logo {
-  height: auto;
-  padding: 0;
-  margin: 0;
-}
-#logo svg{
-    height: 24px;
-    display: block;
-}
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
 
-#topBar h1{
-
-    font-size: 1.2rem;
-    font-weight: 600;
-    text-align: left;
-    justify-content: center;
-    flex: 2;
-
-    color:var(--color-on-bg2); 
-    white-space: nowrap;
-    font-variant: small-caps;
+    gap: 24px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 12px;
+    box-sizing: border-box;
 }
-#topBar h1 span:first-of-type{
-    /* font-size: 1rem; */
-    font-family: "Outfit" , "Mona Sans" , sans-serif;
-    color:var(--color-primary);
-    font-weight: 600;
-    margin-right: 4px;
-    font-variant: normal;
-
-}
-
-#icons-panel{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;   
-}
-
-/* ### NAGŁÓWKI ### Headers */
-h1
-{
-    margin: 8px;
-    font-size: 0.8rem;
-    font-size: 1.1rem;
-    /* text-transform: uppercase; */
-} 
 
 h2 {
     margin: 10px 0;
@@ -85,267 +117,289 @@ h2 {
 }
 
 h3 {
+    margin-bottom: 0.5em;
+
     text-transform: uppercase;
     font-size: 0.9em;
-    margin-bottom: 0.5em;
+
     color: var(--color-on-bg);
 }
 
+    /*=== SIDE WRAPPER === CONTROLS + RESULT */
+    .sidebar {
+        flex: 1 1 320px;
+        display: flex;
+        flex-direction: column;
+        align-self: center;
 
-/* ### KONTENER GLOWNY SYMULACJI ### - Simulation Main Container */
-.main-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 12px;
-    box-sizing: border-box;
-}
-
-/* ### PANEL BOCZNY ### Side Panel */
-.sidebar {
-    flex: 1 1 320px;
-    min-width: 310px;
-    max-width: 360px;
-    display: flex;
-    flex-direction: column;
-    gap: 0px;
-    align-self: center;
-}
-/* Naglowki panelu bocznego - Side Panel Headers */
-.sidebar h3 {
-    grid-column: 1 / -1; /* Nagłówek zajmuje całą szerokość dla dwóch kolumn */
-    width: 100%;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-/* ### KONTROLKI I WYNIKI ### Controls and Results */
-.controls, #result {
-    flex: 1 1;
-    min-width: 260px;
-}
-/* Wartości suwaków - Sliders Values */
-.controls span {
-font-weight:600;
-color:var(--color-on-bg);
-}
-
-/* Etykieta suwaków - Sliders Label */
-label {
-    display: block;
-    margin-top: 10px;
-    font-size: clamp(0.7rem, 2.5vw, 0.9rem);
-}
-/* Suwaki */
-input[type=range] {
-    width: 90%;
-    margin: 5px 0;
-}
-
-input[type="range"] {
-  accent-color: var(--primary-700)
-}
-/* ### PRZYCISKI ### Buttons */
-
-.button-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 15px;
-}
-
-.controls button {
-    flex: 1;
-    min-width: 80px;
-    padding: 12px 16px;
-    font-size: clamp(0.9rem, 2.5vw, 1rem);
-    color: var(--on-button);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    transform: translateY(0);
-}
-
-.controls button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    filter: brightness(1.1);
-}
-
-.controls button:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-.green-button {
-    background: var(--btn-green-active);
-}
-
-.yellow-button {
-    background: var(--btn-yellow-active);
-}
-
-.red-button {
-    background: var(--btn--red-active);
-}
-
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
+        min-width: 310px;
+        max-width: 360px;
+        gap: 0px;
 
 
-/* ### WYNIKI ### Results */
-#result {
-    margin-top: 15px;
-    font-size: clamp(0.7rem, 1.0vw, 0.8rem);
-    color: var(--accent-blue-400);
-    line-height: 1.4em;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
-    gap: 8px;
-    text-align: left;
-}
+    }
+        .sidebar h3 { /* Ogólna zasada dla H3 w sidebar */
+            grid-column: 1 / -1; /* Nagłówek zajmuje całą szerokość dla dwóch kolumn */
+            
+            width: 100%;
+            margin-bottom: 10px;
 
-#result > div {
-    background: var(--color-small-surface);
-    border:1px solid var(--color-small-surface-border);
-    padding: 8px 12px;
-    border-radius: 6px;
-    white-space: nowrap;
-    font-weight: 600;
-}
+            text-align: center;
+            font-size: 0.9rem;
+        }
 
-#result > div:nth-of-type(1) { order: 1; }
-#result > div:nth-of-type(2) { order: 2; }
-#result > div:nth-of-type(3) { order: 3; }
-#result > div:nth-of-type(4) { order: 4; }
-#result > div:nth-of-type(5) { order: 5; }
-#result > div:nth-of-type(6) { order: 6; }
-#result > div:nth-of-type(7) { order: 7; }
-#result > div:nth-of-type(8) { order: 8; }
-
-#result span {
-    color: var(--accent-blue-200);
-}
-
-#result span.units {
-    color: var(--accent-blue-400);
-}
+        .controls, .result {
+            flex: 1 1;
+            min-width: 260px;
+        }
 
 
-/* ### OBSZAR RYSOWANIA ### Canvas */
-.canvas-container {
-    flex: 1 1 500px;
-    min-width: 860px;
-    width: fit-content;
-    margin-top: 0;
-    align-self: flex-start;
-}
+        .controls span {
+        font-weight:600;
 
-canvas {
-    background: var(--canvas-bg);
-    touch-action: none;
-    border-radius: 12px;
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
+        color:var(--color-on-bg);
+        }
+
+        /*=== CONTROLS === */
+        .controls label {
+            display: block;
+            margin-top: 10px;
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+        }
+
+        .controls input[type=range] {
+            width: 90%;
+            margin: 5px 0;
+        }
+
+        .controls input[type="range"] {
+            accent-color: var(--color-primary-stronger);
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .controls button {
+            flex: 1;
+
+            min-width: 80px;
+            padding: 12px 16px;
+            
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            white-space: nowrap;
+            
+            color: var(--on-bttn);
+            border: none;
+            border-radius: 5px;
+
+            transition: all 0.3s ease;
+            transform: translateY(0);
+
+            cursor: pointer;
+        }
+
+        .controls button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .controls button:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .green-button {
+            background: var(--color-bttn-green-active);
+        }
+
+        .yellow-button {
+            background: var(--color-bttn-yellow-active);
+        }
+
+        .red-button {
+            background: var(--color-bttn--red-active);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
 
-/* ### SEKCJA EDUKACYJNA - Educational Section */
+        /*=== RESULT === */
+        .result{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+
+            margin-top: 15px;
+            gap: 8px;
+
+            font-size: clamp(0.7rem, 1.0vw, 0.8rem);
+            line-height: 1.4em;
+
+            color: var(--color-primary-strong);
+
+            text-align: left;
+        }
+
+        .result > div {
+            padding: 8px 12px;
+
+            white-space: nowrap;
+            font-weight: 600;
+
+            background: var(--color-small-surface);
+            border:1px solid var(--color-small-surface-border);
+            border-radius: 6px;
+
+        }
+
+        .result > div:nth-of-type(1) { order: 1; }
+        .result > div:nth-of-type(2) { order: 2; }
+        .result > div:nth-of-type(3) { order: 3; }
+        .result > div:nth-of-type(4) { order: 4; }
+        .result > div:nth-of-type(5) { order: 5; }
+        .result > div:nth-of-type(6) { order: 6; }
+        .result > div:nth-of-type(7) { order: 7; }
+        .result > div:nth-of-type(8) { order: 8; }
+
+        .result span {
+            color: var(--color-primary-weak);
+        }
+
+        .result span.units {
+            color: var(--color-primary-strong);
+        }
+
+
+/* ========================================================== /
+=== CANVAS === Obszar rysowania
+/  ==========================================================*/
+    .canvas-container {
+        flex: 1 1 500px;
+        align-self: flex-start;
+
+        min-width: 860px;
+        width: fit-content;
+        margin-top: 0;
+    }
+
+    canvas {
+        display: block;
+
+        max-width: 100%;
+        height: auto;
+
+        background: var(--canvas-bg);
+        border-radius: 12px;
+
+        touch-action: none;
+    }
+
+
+/* ========================================================== /
+=== EDU SECTION === Sekcja edukacyjna
+/  ==========================================================*/
 
 #edu-section {
+    box-sizing: border-box;
     max-width: 1000px;
     margin: 40px auto;
     padding:24px 36px;
-    /* border: 1px solid var(--edu-section-bg); */
-    background: var(--edu-section-bg);
-    border-radius: 12px;
+
     text-align: left;
-    color: var(--color-on-bg);
     font-size: clamp(0.9rem, 2.2vw, 1rem);
     line-height: 1.6em;
-    box-sizing: border-box;
-    /* border: 1px solid rgba(40,40,40,0.8) */
-}
 
-#edu-section h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: var(--edu-head2-color);
-}
-#edu-section > h3{
-  color:var(--edu-head3-color);
-}
-
-#edu-section ul {
-    padding-left: 20px;
-}
-
-#edu-section li {
-    margin-bottom: 8px;
-}
-
-#edu-section code {
-    background:var(--edu-code-bg);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9em;
-    white-space: nowrap;
-}
-
-/* Ilustracje i wyjaśnienia */
-.svg-info-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    margin: 20px 0;
+    background: var(--edu-section-bg);
     border-radius: 12px;
-    padding: 20px;
-    background: var(--exp-edu-background);
-}
-
-.vector-illustration {
-  min-width: 300px;
-    max-width: 50%;
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-.explanation-container {
-    font-size: clamp(0.85rem, 2vw, 0.95rem);
-    line-height: 1.6;
     color: var(--color-on-bg);
-    align-self: center;
-
+    border: solid 1px var(--color-surface-border)
 }
 
-.explanation-container h3 {
-    margin-top: 0;
-}
+    #edu-section h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: var(--edu-head2-color);
+    }
+    #edu-section > h3{
+        color:var(--edu-head3-color);
+    }
 
-.lime-exp {
-    color: var(--accent-lime-500);
-}
-.blue-exp {
-    color: var(--accent-blue-400);
-}
-.red-exp {
-    color: var(--accent-red-500);
-}
+    #edu-section ul {
+        padding-left: 20px;
+    }
+
+    #edu-section li {
+        margin-bottom: 8px;
+    }
+
+    #edu-section code {
+        background:var(--edu-code-bg);
+        padding: 2px 6px;
+
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+        white-space: nowrap;
+
+        border-radius: 4px;
+    }
+
+    /* Ilustracje i wyjaśnienia */
+    .svg-info-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        gap: 2rem;
+        margin: 20px 0;
+        padding: 20px;
+
+        border-radius: 12px;
+        background: var(--exp-edu-background);
+    }
+
+        .vector-illustration {
+            display: block;
+
+            box-sizing: border-box;
+            min-width: 300px;
+            max-width: 50%;
+            width: 100%;
+            height: auto;
+            padding: 10px;
+
+            border-radius: 8px;
+        }
+
+        .explanation-container {
+            align-self: center;
+
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            line-height: 1.6;
+
+            color: var(--color-on-bg);
+        }
+
+        .explanation-container h3 {
+            margin-top: 0;
+        }
+
+        .lime-exp {
+            color: var(--color-drawing-green);
+        }
+        .blue-exp {
+            color: var(--color-drawing-blue);
+        }
+        .red-exp {
+            color: var(--color-drawing-red);
+        }
