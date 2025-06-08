@@ -21,7 +21,7 @@
     --color-drawing-yellow: hsl(52, 100%, 70%);
     --color-drawing-gray: hsl(0, 0%, 53%);
     --color-drawing-red-weak: hsl(17, 100%, 79%);
-    --color-drawing-red-weak: hsl(193, 100%, 85%);
+    --color-drawing-blue-weak: hsl(193, 100%, 85%);
 
     --color-bttn-green-active: hsl(160, 65%, 39%);
     --color-bttn-yellow-active: hsl(48, 50%, 63%);
@@ -79,13 +79,13 @@ html.light-theme {
     --color-primary-stronger: hsl(203, 60%, 50%);
     --color-primary-weak: hsl(203, 60%, 50%);
 
-    --color-drawing-blue: hsl(200, 100%, 71%);
-    --color-drawing-red: hsl(7, 100%, 66%);
-    --color-drawing-green: hsl(81,1%, 40%);
-    --color-drawing-yellow: hsl(52, 100%, 70%);
-    --color-drawing-gray: hsl(0, 0%, 53%);
-    --color-drawing-red-weak: hsl(17, 100%, 79%);
-    --color-drawing-red-weak: hsl(193, 100%, 85%);
+    --color-drawing-blue: hsl(200, 100%, 51%);
+    --color-drawing-red: hsl(7, 80%, 60%);
+    --color-drawing-green: hsl(261, 66%, 67%);
+    --color-drawing-yellow: hsl(56, 91%, 46%);
+    --color-drawing-gray: hsl(0, 0%, 63%);
+    --color-drawing-red-weak: hsl(7, 100%, 70%);
+    --color-drawing-blue-weak: hsl(200, 100%, 75%);
 
     --color-bttn-green-active: hsl(161, 94%, 30%);
     --color-bttn-yellow-active: hsl(32, 58%, 55%);

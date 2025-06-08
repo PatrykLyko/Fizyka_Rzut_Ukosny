@@ -20,3 +20,10 @@
     .then(svgData => {
       document.getElementById('logo-container').innerHTML = svgData;
     });
+
+              // Wczytaj plik SVG sun-moon.svg
+  fetch('./img/skladowe.svg')
+    .then(response => response.text())
+    .then(svgData => {
+      document.getElementById('vector-ph').innerHTML = svgData;
+    });
